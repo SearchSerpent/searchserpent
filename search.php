@@ -214,7 +214,7 @@ if(isset($_GET['query'])) {
 
                     </style>";
             $html .= "<div id='search_list'>";
-            $html .= "<h2 style='color:black;'>Search Results for ".$search_query."</h2>";
+            $html .= "<h2 style='color:black; text-transform:none;'>Search Results for ".$search_query."</h2>";
             
             foreach($results['items'] as $item) {
                 $html .= "<div class='search_item'>";
