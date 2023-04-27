@@ -181,100 +181,111 @@ if (isset($_SESSION['info'])) {
                                         <a href='search_query.php'><button class="btn" type="submit">Search</button></a>
                                 </div>
 
+                                <style><!-- For the search results -->
+        #search_list h3 {
+            margin: 0;
+            color:blue;
+            
+        }
+        
+        a {
+            text-decoration: none;
+            color: #1a0dab;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        div {
+            font-size: 14px;
+            color: #006621;
+        }
 
 
-                                <?php
-                                // Check if the search query is set
-                                if (isset($_GET['query'])) {
-                                    // Get the search query
-                                    $query = $_GET['query'];
-                                    // Define the database connection variables
-                                    $host = 'localhost';
-                                    $username = 'root';
-                                    $password = '';
-                                    $database = 'ssdb';
-                                    // Create a PDO database connection
-                                    $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
-                                    // Set the number of results to display per page
-                                    $results_per_page = 10;
-                                    // Get the current page number
-                                    if (isset($_GET['page'])) {
-                                        $page = $_GET['page'];
-                                    } else {
-                                        $page = 1;
-                                    }
-                                    // Calculate the starting result for the current page
-                                    $start_from = ($page - 1) * $results_per_page;
-                                    // Prepare the SQL statement to search for the query in the database
-                                    // Prepare the SQL statement to search for the query in the title and keywords columns and order the results by relevance
-                                    $stmt = $pdo->prepare("SELECT * FROM `pages` 
-WHERE MATCH (`title`, `keywords`) AGAINST (:query) 
-ORDER BY MATCH (`title`, `keywords`) AGAINST (:query) DESC 
-LIMIT $start_from, $results_per_page");
-                                    $stmt->bindValue(':query', $query);
+    </style>
+
+                <?php
 
 
-                                    // Execute the SQL statement
-                                    $stmt->execute();
-                                    // Fetch the results
-                                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                    // Get the total number of results for the query
-                                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM `pages` 
-    WHERE `title` LIKE :query OR 
-    `description` LIKE :query OR 
-    `url` LIKE :query");
-                                    $stmt->bindValue(':query', '%' . $query . '%');
-                                    $stmt->execute();
-                                    $total_results = $stmt->fetchColumn();
-                                    // Calculate the total number of pages
-                                    $total_pages = ceil($total_results / $results_per_page);
-                                    // Display the results
+if(isset($_GET['query'])) {
+    $search_query = $_GET['query'];
+    $search_engine_id = "12df0fc9b39e74ab9"; 
+    $api_key = "AIzaSyDT9ocVlzkbQx0l-mpMU-zQq3F0wyDvMzc"; 
+    $start_index = isset($_GET['start_index']) ? $_GET['start_index'] : 1;
 
-                                    foreach ($results as $result) {
-                                ?>
+    $url = "https://www.googleapis.com/customsearch/v1?key=".$api_key."&cx=".$search_engine_id."&q=".urlencode($search_query)."&start=".$start_index;
 
-                                        <div class="search_list">
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($ch);
+    curl_close($ch);
 
-                                            <?php
+    $results = json_decode($output, true);
 
-                                            echo '<h3 style="text-transform:none; "><a href="' . $result['url'] . '" target="_blank"> <b>' . $result['title'] . '</b></a></h3>';
-                                            echo '<p style="color:green; font-size: 11px;">' . $result['url'] . '</p> <br>';
-                                            echo $result['description'] . '<br><br>';
+    $html = "";
+    if(isset($_GET['query'])) {
+        $search_query = $_GET['query'];
+        $search_engine_id = "12df0fc9b39e74ab9"; 
+        $api_key = "AIzaSyDT9ocVlzkbQx0l-mpMU-zQq3F0wyDvMzc"; 
+        $start_index = isset($_GET['start_index']) ? $_GET['start_index'] : 1;
 
-                                            ?>
+        $url = "https://www.googleapis.com/customsearch/v1?key=".$api_key."&cx=".$search_engine_id."&q=".urlencode($search_query)."&start=".$start_index;
 
-                                        </div>
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
 
-                                    <?php
-                                    }
+        $results = json_decode($output, true);
 
-                                    ?>
+        if(isset($results['items'])) {
+            $html .= "<style>
+                    #search_list {
+                        background-color: #f5f5f5;
+                        text-align:left;
+                        }
 
-                                    <div class="paging">
-                                        <?php
-                                        // Display the pagination links
-                                        for ($i = 1; $i <= $total_pages; $i++) {
+                    .search_item 
+                    {
+                        background-color: #fff;
+                        
+                        }
 
-                                            echo '<a href="search.php?query=' . $query . '&page=' . $i . '">' . $i . '</a>';
-                                        }
-
-
-                                        ?>
-                                    </div>
-                                <?php
-                                } else {
-                                ?>
-                                    <p>Sorry, we are unable to find what you're looking for. Try to search on something. </p>
-
-                                <?php
-                                }
-                                ?>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-
+                    </style>";
+            $html .= "<div id='search_list'>";
+            $html .= "<h2 style='color:black; text-transform:none;'>Search Results for ".$search_query."</h2>";
+            
+            foreach($results['items'] as $item) {
+                $html .= "<div class='search_item'>";
+                $html .= "<h3 
+                            style='font-size:22px; text-transform:none;'
+                            >
+                            <a href='".$item['link']."'>".$item['title']."</a></h3>";
+                $html .= "<div>".$item['link']."</div>";
+                $html .= "<p style='color:black;'>" .$item['snippet']. "</p><br><br>";
+                $html .= "</div>";
+            }
+            $html .= "<div>";
+            $total_results = $results['searchInformation']['totalResults'];
+            $prev_start_index = max(1, $start_index - 10);
+            $next_start_index = min($start_index + 10, $total_results);
+            if($prev_start_index != $start_index) {
+                $html .= "<a href='?query=".urlencode($search_query)."&start_index=".$prev_start_index."'>⏮️</a>";
+            }
+            if($next_start_index > $start_index && $next_start_index <= $total_results) {
+                $html .= "<a href='?query=".urlencode($search_query)."&start_index=".$next_start_index."'>⏭️</a>";
+            }
+            $html .= "</div>";
+            $html .= "</div>";
+        } else {
+            $html = "<h2>No results found for '".$search_query."'</h2>";
+        }
+    }}
+    echo $html;
+?>
                 <div class="secondary_layer">
 
                 </div>
