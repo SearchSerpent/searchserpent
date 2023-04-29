@@ -119,7 +119,7 @@
 
 
           <div style="color: white;" class="card-tools">
-            <a style="background-color: #007bff; border-style: none; color: white;" class="btn btn-tool" href="message.php">
+            <a style="background-color: #007bff; border-style: none; color: white;" class="btn btn-tool" href="admin/message.php">
               <font color: White>View Messages</font>
             </a>
 
