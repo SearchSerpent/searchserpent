@@ -149,8 +149,12 @@
 
                             if (isset($_GET['delete'])) {
                                 $delete_id = $_GET['delete'];
-                                mysqli_query($conn, "DELETE FROM `message` WHERE id = '$delete_id'") or die('query failed');
+                                mysqli_query($conn, "DELETE FROM `message` WHERE id = '$delete_id'") or die(mysqli_error($conn)); // you need to complete this line with error handling
+                                $_SESSION['msg'] = "Message Deleted successfully";
+                                header('location:message.php');
+                                exit();
                             }
+                            
 
                             $cnt = 1;
                             if ($query->rowCount() > 0) {
