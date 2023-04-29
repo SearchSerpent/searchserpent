@@ -12,7 +12,7 @@ if (!isset($user_id)) {
 
 if (isset($_POST['send'])) {
 
-    $conn = mysqli_connect('localhost', 'root', '', 'pdocrud');
+    $conn = mysqli_connect('sql202.epizy.com', 'epiz_33766646', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud');
 
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
