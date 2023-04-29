@@ -2,11 +2,14 @@
 session_start();
 require_once "dbconfig.php";
 
-if (!isset($_SESSION['userid']) || trim($_SESSION['userid']) == '') {
-    header("location: admin_sign_in.php");
+if (empty($_SESSION['userid'])) {
+    header("location: admin/index.php");
+    exit;
 }
-$sql = "SELECT * FROM tbladmin WHERE id='" . $_SESSION['userid'] . "'";
+
+$sql = "SELECT * FROM tbladmin WHERE id=:id";
 $query = $dbh->prepare($sql);
+$query->bindParam(':id', $_SESSION['userid'], PDO::PARAM_INT);
 $query->execute();
 $row = $query->fetchAll(PDO::FETCH_OBJ);
 
