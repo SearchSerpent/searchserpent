@@ -164,7 +164,7 @@
 
                     <td>
                       <a style="color: white; background-color: #379237; border: none;" href="update.php?id=<?php echo htmlentities($result->id); ?>" class="btn btn-primary btn-sm"><span class="fas fa-edit"></span></a>
-                      <a style="color: white; background-color: #DF2E38; border: none;" href="dashboard.php?delete=<?php echo htmlentities($result->id);  ?>" onclick="return confirm('delete this user?');" class="btn btn-danger btn-sm"><span class="fas fa-trash"></span></a>
+                      <a style="color: white; background-color: #DF2E38; border: none;" href="admin_panel.php?delete=<?php echo htmlentities($result->id);  ?>" onclick="return confirm('delete this user?');" class="btn btn-danger btn-sm"><span class="fas fa-trash"></span></a>
                     </td>
                   </tr>
 
