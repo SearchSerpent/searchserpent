@@ -293,8 +293,15 @@ if(isset($_GET['query'])) {
             $html = "<h2>No results found for '".$search_query."'</h2>";
         }
         
-        echo $html;
-        
+        echo $html;}
+}
+        ?>
+
+
+
+
+
+</div>
 
 
                 <div class="secondary_layer">
