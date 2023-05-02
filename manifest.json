@@ -1,24 +1,23 @@
 {
-  "name": "SearchSerpent",
-  "short_name": "SearchSerpent",
-  "description": "A search engine built with PHP",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "images/favicon.ico",
-      "sizes": "512x512",
-      "type": "image/ico"
-    }
-  ],
-  "start_url": "https://searchserpent.rf.gd/",
-  "background_color": "#ffffff",
-  "theme_color": "#2196f3",
-  "display": "standalone",
-  "scope": "/",
-  "orientation": "landscape",
-  "lang": "en-US"
-}
+    "name": "SearchSerpent",
+    "short_name": "SearchSerpent",
+    "description": "A search engine built with PHP",
+    "icons": [
+      {
+        "src": "favicon.ico",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "images/favicon.ico",
+        "sizes": "16x16 32x32 512x512",
+        "type": "image/ico"
+      }
+    ],
+    "start_url": "https://searchserpent.rf.gd/",
+    "background_color": "#ffffff",
+    "theme_color": "#2196f3",
+    "display": "standalone",
+    "scope": "/"
+  }
+  
