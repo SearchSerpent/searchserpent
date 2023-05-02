@@ -141,7 +141,7 @@
                         </thead>
                         <tbody>
                             <?php
-                           $conn = mysqli_connect('sql202.epizy.com', 'epiz_33766646', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud');
+                            $conn = mysqli_connect('sql202.epizy.com', 'epiz_33766646', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud');
                             $sql = "SELECT * FROM message";
                             $query = $dbh->prepare($sql);
                             $query->execute();
