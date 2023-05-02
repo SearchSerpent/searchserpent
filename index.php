@@ -25,6 +25,7 @@ unset($_SESSION['message']);
 
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="manifest" href="manifest.json">
 
     <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
 
@@ -49,6 +50,9 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+
+
+
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
