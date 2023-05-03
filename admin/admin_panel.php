@@ -119,7 +119,7 @@
 
 
           <div style="color: white;" class="card-tools">
-            <a style="background-color: #007bff; border-style: none; color: white;" class="btn btn-tool" href="admin/message.php">
+            <a style="background-color: #007bff; border-style: none; color: white;" class="btn btn-tool" href="message.php">
               <font color: White>View Messages</font>
             </a>
 
@@ -139,7 +139,7 @@
             </thead>
             <tbody>
               <?php
-              $conn = mysqli_connect('sql202.epizy.com', 'epiz_33766646', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud') or die('connection failed');
+              $conn = mysqli_connect('sql202.epizy.com', 'root', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud');
               $sql = "SELECT * FROM tblusers";
               $query = $dbh->prepare($sql);
               $query->execute();
@@ -164,7 +164,7 @@
 
                     <td>
                       <a style="color: white; background-color: #379237; border: none;" href="update.php?id=<?php echo htmlentities($result->id); ?>" class="btn btn-primary btn-sm"><span class="fas fa-edit"></span></a>
-                      <a style="color: white; background-color: #DF2E38; border: none;" href="admin_panel.php?delete=<?php echo htmlentities($result->id);  ?>" onclick="return confirm('delete this user?');" class="btn btn-danger btn-sm"><span class="fas fa-trash"></span></a>
+                      <a style="color: white; background-color: #DF2E38; border: none;" href="dashboard.php?delete=<?php echo htmlentities($result->id);  ?>" onclick="return confirm('delete this user?');" class="btn btn-danger btn-sm"><span class="fas fa-trash"></span></a>
                     </td>
                   </tr>
 
