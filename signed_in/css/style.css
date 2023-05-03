@@ -754,9 +754,11 @@ body {
 	border: none;
 	letter-spacing: 1px;
 	width: 100%;
+	max-width: 500px;
 	position: relative;
 	float: left;
 	height: 50px;
+	max-height: 100%;
 	margin-bottom: 0;
 	border-top-left-radius: 36px;
 	border-bottom-left-radius: 36px;

@@ -201,20 +201,29 @@ if(isset($_GET['query'])) {
 
         if(isset($results['items'])) {
             $html .= "<style>
-                #search_list {
-                    background-color: #f5f5f5;
-                    text-align:left;
-                }
+            #search_list {
+                background-color: #f5f5f5;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: stretch;
+            }
         
-                .search_item {
-                    background-color: #fff;
-                }
+            .search_item {
+                background-color: #fff;
+                max-width: 1000px;
+                width: 100%;
+                margin: 10px 20px;
+                padding: 10px 5px;
+            }
         
-                .pagination {
-                    display: flex;
-                    justify-content: center;
-                    margin-top: 20px;
-                }
+            .pagination {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+                padding: 10px 10px;
+            }
         
                 .page-link {
                     display: block;
@@ -295,7 +304,7 @@ if(isset($_GET['query'])) {
         
         echo $html;
         
-
+?>
 
                 <div class="secondary_layer">
 

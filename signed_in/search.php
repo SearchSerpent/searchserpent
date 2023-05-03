@@ -243,48 +243,109 @@ if(isset($_GET['query'])) {
 
         if(isset($results['items'])) {
             $html .= "<style>
-                    #search_list {
-                        background-color: #f5f5f5;
-                        text-align:left;
-                        }
-
-                    .search_item 
-                    {
-                        background-color: #fff;
-                        
-                        }
-
-                    </style>";
+            #search_list {
+                background-color: #f5f5f5;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: stretch;
+            }
+        
+            .search_item {
+                background-color: #fff;
+                max-width: 1000px;
+                width: 100%;
+                margin: 10px 20px;
+                padding: 10px 5px;
+            }
+        
+            .pagination {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+                padding: 10px 10px;
+            }
+        
+                .page-link {
+                    display: block;
+                    padding: 5px 10px;
+                    margin: 0 5px;
+                    background-color: #fff;
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    color: #333;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+        
+                .page-link:hover,
+                .page-link:focus {
+                    background-color: #eee;
+                }
+        
+                .page-link.active {
+                    background-color: #333;
+                    color: #fff;
+                    border-color: #333;
+                }
+        
+            </style>";
+            
             $html .= "<div id='search_list'>";
             $html .= "<h2 style='color:black; text-transform:none;'>Search Results for ".$search_query."</h2>";
             
+            $items_per_page = 10;
+            $current_page = floor($start_index / $items_per_page) + 1;
+            $total_pages = ceil($results['searchInformation']['totalResults'] / $items_per_page);
+            $first_page = max(1, $current_page - 3);
+            $last_page = min($total_pages, $current_page + 3);
+            
             foreach($results['items'] as $item) {
                 $html .= "<div class='search_item'>";
-                $html .= "<h3 
-                            style='font-size:22px; text-transform:none;'
-                            >
-                            <a href='".$item['link']."'>".$item['title']."</a></h3>";
+                $html .= "<h3 style='font-size:22px; text-transform:none;'>
+                            <a href='".$item['link']."'>".$item['title']."</a>
+                        </h3>";
                 $html .= "<div>".$item['link']."</div>";
                 $html .= "<p style='color:black;'>" .$item['snippet']. "</p><br><br>";
                 $html .= "</div>";
             }
-            $html .= "<div>";
-            $total_results = $results['searchInformation']['totalResults'];
-            $prev_start_index = max(1, $start_index - 10);
-            $next_start_index = min($start_index + 10, $total_results);
-            if($prev_start_index != $start_index) {
-                $html .= "<a href='?query=".urlencode($search_query)."&start_index=".$prev_start_index."'>⏮️</a>";
+            
+            if($total_pages > 1) {
+                $html .= "<div class='pagination'>";
+                
+                if($current_page > 1) {
+                    $prev_start_index = ($current_page - 2) * $items_per_page + 1;
+                    $html .= "<a href='?query=".urlencode($search_query)."&start_index=".$prev_start_index."' class='page-link'>
+                                Previous
+                            </a>";
+                }
+                
+                for($i = $first_page; $i <= $last_page; $i++) {
+                    $start_index = ($i - 1) * $items_per_page + 1;
+                    $active_class = ($i == $current_page) ? 'active' : '';
+                    $html .= "<a href='?query=".urlencode($search_query)."&start_index=".$start_index."' class='page-link ".$active_class."'>
+                                ".$i."
+                            </a>";
+                }
+                
+                if($current_page < $total_pages) {
+                    $next_start_index = $current_page * $items_per_page + 1;
+                    $html .= "<a href='?query=".urlencode($search_query)."&start_index=".$next_start_index."' class='page-link'>
+                                Next
+                            </a>";
+                }
+                
+                $html .= "</div>";
             }
-            if($next_start_index > $start_index && $next_start_index <= $total_results) {
-                $html .= "<a href='?query=".urlencode($search_query)."&start_index=".$next_start_index."'>⏭️</a>";
-            }
-            $html .= "</div>";
+            
             $html .= "</div>";
         } else {
             $html = "<h2>No results found for '".$search_query."'</h2>";
         }
-    }}
-    echo $html;
+        
+        echo $html;
+        
 ?>
                 <div class="secondary_layer">
 

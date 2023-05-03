@@ -5,7 +5,7 @@ body {
 
 input::-ms-reveal,
 input::-ms-clear {
-  display: none;
+	display: none;
 }
 
 #scrollUp {
@@ -752,6 +752,7 @@ input::-ms-clear {
 	display: table;
 }
 
+
 .subscribe .opacity_overlay .form-input {
 	background: rgba(255, 255, 255, 0.4);
 	padding-left: 25px;
@@ -759,9 +760,11 @@ input::-ms-clear {
 	border: none;
 	letter-spacing: 1px;
 	width: 100%;
+	max-width: 500px;
 	position: relative;
 	float: left;
 	height: 50px;
+	max-height: 100%;
 	margin-bottom: 0;
 	border-top-left-radius: 36px;
 	border-bottom-left-radius: 36px;
@@ -1326,5 +1329,3 @@ input::-ms-clear {
 .copyright-part p span {
 	color: #ccc;
 }
-
-
