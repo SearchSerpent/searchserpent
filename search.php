@@ -304,7 +304,7 @@ if(isset($_GET['query'])) {
         
         echo $html;
         
-?>
+
 
                 <div class="secondary_layer">
 

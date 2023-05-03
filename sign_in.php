@@ -258,7 +258,7 @@ if (isset($_POST['submit'])) {
                         <input style="text-transform: none; width: 500px; font-family: montserrat; margin-top: 5px;" type="text" name="email" required value="<?= isset($_SESSION['info']['email']) ? $_SESSION['info']['email'] : '' ?>" placeholder="Email or username">
 
                         <div>
-                            <input style="width:500px; font-family: montserrat" type="password" id="id_password" name="password" required placeholder="Password">
+                            <input style="width:100%; font-family: montserrat" type="password" id="id_password" name="password" required placeholder="Password">
                             <i class="far fa-eye" id="togglePassword" style="margin-left: -35px; cursor: pointer;"></i>
                         </div>
 

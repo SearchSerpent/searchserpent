@@ -141,7 +141,7 @@
                         </thead>
                         <tbody>
                             <?php
-                           $conn = mysqli_connect('sql202.epizy.com', 'epiz_33766646', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud');
+                            $conn = mysqli_connect('sql202.epizy.com', 'epiz_33766646', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud');
                             $sql = "SELECT * FROM message";
                             $query = $dbh->prepare($sql);
                             $query->execute();
@@ -149,12 +149,8 @@
 
                             if (isset($_GET['delete'])) {
                                 $delete_id = $_GET['delete'];
-                                mysqli_query($conn, "DELETE FROM `message` WHERE id = '$delete_id'") or die(mysqli_error($conn)); // you need to complete this line with error handling
-                                $_SESSION['msg'] = "Message Deleted successfully";
-                                header('location:message.php');
-                                exit();
+                                mysqli_query($conn, "DELETE FROM `message` WHERE id = '$delete_id'") or die('query failed');
                             }
-                            
 
                             $cnt = 1;
                             if ($query->rowCount() > 0) {
