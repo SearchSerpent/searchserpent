@@ -72,13 +72,13 @@ if (isset($_POST['next'])) {
             window.history.forward();
         }
         setTimeout("preback()", 0);
-        window.onunload = function() {
+        window.onunload = function () {
             null
         };
     </script>
 
     <script type="text/javascript">
-        $(window).load(function() {
+        $(window).load(function () {
             $(".loader").fadeOut("slow");
         })
     </script>
@@ -89,26 +89,15 @@ if (isset($_POST['next'])) {
 
 <body>
 
-    <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
 
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -118,7 +107,8 @@ if (isset($_POST['next'])) {
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
+                    id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="index.php"><span>Home</span></a></li>
@@ -271,14 +261,14 @@ if (isset($_POST['next'])) {
 
                     <?php
                     if (isset($_SESSION['status'])) {
-                    ?>
+                        ?>
                         <div style="width: 500px;" class="alert alert-success" role="alert">
                             <center>
                                 <p> Your email address has been verified successfully.</p>
                             </center>
                         </div>
 
-                    <?php
+                        <?php
 
                         unset($_SESSION['status']);
                     }
@@ -288,23 +278,34 @@ if (isset($_POST['next'])) {
                     <hr>
                     <form name="contactForm" onsubmit="return validateForm()" method="POST" action="">
 
-                        <input style="text-transform: none; width: 500px; font-family: montserrat;margin-top: 5px;" required type="password" id="password1" name="password" maxlength="30" value="<?= isset($_SESSION['info']['password']) ? $_SESSION['info']['password'] : '' ?>" placeholder="Enter your password">
+                        <input style="text-transform: none; width: 500px; font-family: montserrat;margin-top: 5px;"
+                            required type="password" id="password1" name="password" maxlength="30"
+                            value="<?= isset($_SESSION['info']['password']) ? $_SESSION['info']['password'] : '' ?>"
+                            placeholder="Enter your password">
                         <i class="far fa-eye" id="toggle-password1" style="margin-left: -35px; cursor: pointer;"></i>
 
-                        <div class="popup" onclick="myFunction()"><i class="fa fa-info-circle" style="color: gray; text-indent: 14px" aria-hidden="true"></i>
-                            <span class="popuptext" id="myPopup">Passwords must contain 8 or more characters with at least one number, one uppercase letter, one lowercase letter, and one special character.</span>
+                        <div class="popup" onclick="myFunction()"><i class="fa fa-info-circle"
+                                style="color: gray; text-indent: 14px" aria-hidden="true"></i>
+                            <span class="popuptext" id="myPopup">Passwords must contain 8 or more characters with at
+                                least one number, one uppercase letter, one lowercase letter, and one special
+                                character.</span>
                         </div>
                         <div class="error1" id="passwordErr"></div>
 
 
                         <!-- Confirm password -->
-                        <input style="text-transform: none; width: 500px; font-family: montserrat" onpaste="return false;" type="password" required name="confirmpassword" id="password2" value="<?= isset($_SESSION['info']['confirmpassword']) ? $_SESSION['info']['confirmpassword'] : '' ?>" maxlength="30" placeholder="Confirm your password">
+                        <input style="text-transform: none; width: 500px; font-family: montserrat"
+                            onpaste="return false;" type="password" required name="confirmpassword" id="password2"
+                            value="<?= isset($_SESSION['info']['confirmpassword']) ? $_SESSION['info']['confirmpassword'] : '' ?>"
+                            maxlength="30" placeholder="Confirm your password">
                         <i class="far fa-eye" id="toggle-password2" style="margin-left: -35px; cursor: pointer;"></i>
                         <div class="error1" id="confirmpasswordErr"></div>
 
                         <br>
                         <!-- Next button -->
-                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;" type="submit" name="next" value="Submit" class="form-btn">
+                        <input
+                            style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;"
+                            type="submit" name="next" value="Submit" class="form-btn">
 
                     </form>
                 </div>
@@ -315,7 +316,9 @@ if (isset($_POST['next'])) {
 
                     <h3><b>Our Mission</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine application that provides computer science students with accurate and relevant search results.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine
+                        application that provides computer science students with accurate and relevant search results.
+                    </p>
 
                 </div>
             </div>
@@ -323,7 +326,11 @@ if (isset($_POST['next'])) {
                 <div class="contact-info">
                     <h3><b>Our Vision</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that provides computer science students with easy access to high-quality educational resources. Through advanced search filters, the application will help students find the resources they need quickly and efficiently. Ultimately, we aim to support students in their learning journey and help them achieve academic success.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that
+                        provides computer science students with easy access to high-quality educational resources.
+                        Through advanced search filters, the application will help students find the resources they need
+                        quickly and efficiently. Ultimately, we aim to support students in their learning journey and
+                        help them achieve academic success.</p>
 
                 </div>
             </div>
@@ -376,7 +383,7 @@ if (isset($_POST['next'])) {
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.toggle-menu').jPushMenu({
                 closeOnClickLink: false
             });
@@ -386,7 +393,7 @@ if (isset($_POST['next'])) {
 
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $.scrollUp({
                 scrollName: 'scrollUp', // Element ID
                 topDistance: '300', // Distance from top before showing element (px)
@@ -416,14 +423,14 @@ if (isset($_POST['next'])) {
         const password2 = document.querySelector('#password2');
 
         // Toggle the visibility of password 1
-        togglePassword1.addEventListener('click', function() {
+        togglePassword1.addEventListener('click', function () {
             const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
             password1.setAttribute('type', type);
             togglePassword1.classList.toggle('fa-eye-slash');
         });
 
         // Toggle the visibility of password 2
-        togglePassword2.addEventListener('click', function() {
+        togglePassword2.addEventListener('click', function () {
             const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
             password2.setAttribute('type', type);
             togglePassword2.classList.toggle('fa-eye-slash');

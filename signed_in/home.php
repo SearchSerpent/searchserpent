@@ -81,11 +81,7 @@ if (isset($_SESSION['info'])) {
     <script src="js/counter.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,26 +89,14 @@ if (isset($_SESSION['info'])) {
 
 <body>
 
-    <div class="loader"></div>
-
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
 
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -122,7 +106,8 @@ if (isset($_SESSION['info'])) {
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
+                    id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="home.php"><span>Home</span></a></li>
@@ -179,13 +164,13 @@ if (isset($_SESSION['info'])) {
                         <div class="container">
                             <?php
                             if (isset($_SESSION['status'])) {
-                            ?>
+                                ?>
                                 <div style="width: 600px; text-align: center; margin: auto;">
                                     <center>
                                         <p> Congratulations! Your account has been created successfully.</p>
                                     </center>
                                 </div>
-                            <?php
+                                <?php
                                 unset($_SESSION['status']);
                             }
                             ?>
@@ -195,7 +180,8 @@ if (isset($_SESSION['info'])) {
 
                             <form class="form-subscribe" action="search.php">
                                 <div class="input-group">
-                                    <input style="color:white;" type="text" class="form-input" name="query" placeholder="Search here">
+                                    <input style="color:white;" type="text" class="form-input" name="query"
+                                        placeholder="Search here">
                                     <span class="btn-group">
                                         <button class="btn" type="submit">Search</button>
                                 </div>
@@ -271,14 +257,20 @@ if (isset($_SESSION['info'])) {
                 <div class="sides">
                     <h4>Why Choose Us</h4>
                     <hr>
-                    <p>SearchSerpent is a search engine designed specifically for computer science students. We understand that the field of computer science can be vast and complex, and finding reliable and relevant information can be a daunting task. Our search engine is built to help you navigate this complexity and find the information you need quickly and efficiently. </p>
+                    <p>SearchSerpent is a search engine designed specifically for computer science students. We
+                        understand that the field of computer science can be vast and complex, and finding reliable and
+                        relevant information can be a daunting task. Our search engine is built to help you navigate
+                        this complexity and find the information you need quickly and efficiently. </p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="sides">
                     <h4>What We Will Do</h4>
                     <hr>
-                    <p>Our team has worked tirelessly to build a database of high-quality resources that are specifically tailored to computer science students' needs. We believe that every student should have access to the best resources available to help them succeed academically, which is why we are dedicated to providing a search engine that is dependable, relevant, and responsive.</p>
+                    <p>Our team has worked tirelessly to build a database of high-quality resources that are
+                        specifically tailored to computer science students' needs. We believe that every student should
+                        have access to the best resources available to help them succeed academically, which is why we
+                        are dedicated to providing a search engine that is dependable, relevant, and responsive.</p>
                 </div>
             </div>
         </div>
@@ -290,14 +282,16 @@ if (isset($_SESSION['info'])) {
                     <h3>SearchSerpent</h3>
                     <hr>
                     <p>A cloud-integrated educational web search engine that specifically searches computer
-                        science-related resources and helps users navigate the educational information they are looking for.
+                        science-related resources and helps users navigate the educational information they are looking
+                        for.
                     </p>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <h3>About Us</h3>
                     <hr>
                     <p>At SearchSerpent, we understand the importance of having easy access to educational resources for
-                        computer science students. Our web search engine is designed to provide quick and accurate results,
+                        computer science students. Our web search engine is designed to provide quick and accurate
+                        results,
                         tailored specifically to the needs of computer science students. </p>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -329,7 +323,7 @@ if (isset($_SESSION['info'])) {
 
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('.toggle-menu').jPushMenu({
                     closeOnClickLink: false
                 });
@@ -350,7 +344,7 @@ if (isset($_SESSION['info'])) {
 
 
         <script type="text/javascript">
-            jQuery('.counter-item').appear(function() {
+            jQuery('.counter-item').appear(function () {
                 jQuery('.counter-number').countTo();
                 jQuery(this).addClass('funcionando');
                 console.log('funcionando');
@@ -358,7 +352,7 @@ if (isset($_SESSION['info'])) {
         </script>
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $("#clients-slider").carousel({
                     interval: 5000 //TIME IN MILLI SECONDS
                 });
@@ -367,7 +361,7 @@ if (isset($_SESSION['info'])) {
 
 
         <script type="text/javascript">
-            $(function() {
+            $(function () {
                 $.scrollUp({
                     scrollName: 'scrollUp', // Element ID
                     topDistance: '300', // Distance from top before showing element (px)

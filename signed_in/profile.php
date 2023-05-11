@@ -42,11 +42,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -54,26 +50,15 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
 
 <body>
 
-    <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
 
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -83,7 +68,8 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
+                    id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="home.php"><span>Home</span></a></li>
@@ -160,7 +146,8 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
                 $name = $user["name"];
                 $image = $user["Photo"];
                 ?>
-                <img src="../searchserpent-admin/upload/<?php echo $image; ?>" width=125 height=125 title="<?php echo $image; ?>">
+                <img src="../searchserpent-admin/upload/<?php echo $image; ?>" width=125 height=125
+                    title="<?php echo $image; ?>">
                 <div class="round">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="name" value="<?php echo $name; ?>">
@@ -176,14 +163,18 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
             <div style=" text-align: center;">
                 <br>
                 <b>
-                    <p style="font-family: montserrat; font-size: 20px; text-transform:capitalize "><?php echo $_SESSION['myFirstname']; ?> <?php echo $_SESSION['myLastname']; ?>
+                    <p style="font-family: montserrat; font-size: 20px; text-transform:capitalize ">
+                        <?php echo $_SESSION['myFirstname']; ?>
+                        <?php echo $_SESSION['myLastname']; ?>
                     </p>
                 </b>
 
-                <p style="font-family: montserrat; font-size: 15px; text-transform:capitalize "><b>Username:</b> <?php echo $_SESSION['myUsername']; ?>
+                <p style="font-family: montserrat; font-size: 15px; text-transform:capitalize "><b>Username:</b>
+                    <?php echo $_SESSION['myUsername']; ?>
                 </p>
 
-                <p style="font-family: montserrat; font-size: 15px;"><b>Email:</b> <?php echo $_SESSION['myVariable']; ?>
+                <p style="font-family: montserrat; font-size: 15px;"><b>Email:</b>
+                    <?php echo $_SESSION['myVariable']; ?>
                 </p>
 
 
@@ -263,7 +254,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.toggle-menu').jPushMenu({
                 closeOnClickLink: false
             });
@@ -273,7 +264,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
 
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $.scrollUp({
                 scrollName: 'scrollUp', // Element ID
                 topDistance: '300', // Distance from top before showing element (px)
@@ -291,7 +282,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#id_password');
 
-        togglePassword.addEventListener('click', function(e) {
+        togglePassword.addEventListener('click', function (e) {
             // toggle the type attribute
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
@@ -303,7 +294,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
 
 
     <script type="text/javascript">
-        document.getElementById("image").onchange = function() {
+        document.getElementById("image").onchange = function () {
             document.getElementById("form").submit();
         };
     </script>
@@ -322,7 +313,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
         $imageExtension = strtolower(end($imageExtension));
         if (!in_array($imageExtension, $validImageExtension)) {
             echo
-            "
+                "
         <script>
           alert('Invalid image extension');
           document.location.href = 'profile.php';
@@ -330,7 +321,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
         ";
         } elseif ($imageSize > 1200000) {
             echo
-            "
+                "
         <script>
           alert('Image size is too large');
           document.location.href = 'profile.php';
@@ -343,7 +334,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
             mysqli_query($conn, $query);
             move_uploaded_file($tmpName, '../searchserpent-admin/upload/' . $newImageName);
             echo
-            "
+                "
         <script>
         document.location.href = 'profile.php';
         </script>

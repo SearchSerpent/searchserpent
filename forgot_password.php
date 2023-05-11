@@ -73,11 +73,7 @@ if (isset($_POST['submit'])) {
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -85,26 +81,15 @@ if (isset($_POST['submit'])) {
 
 <body>
 
-    <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
 
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -114,7 +99,8 @@ if (isset($_POST['submit'])) {
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
+                    id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="index.php"><span>Home</span></a></li>
@@ -186,13 +172,13 @@ if (isset($_POST['submit'])) {
             <div class="col-md-8">
                 <?php
                 if (isset($error)) {
-                ?>
+                    ?>
                     <div style="width: 500px;" class="alert alert-danger" role="alert">
                         <center>
                             <p>No account was found with the email address you have entered.</p>
                         </center>
                     </div>
-                <?php
+                    <?php
                     unset($error);
                 }
 
@@ -202,14 +188,18 @@ if (isset($_POST['submit'])) {
                     <hr>
                     <form action="#" method="post">
 
-                        <p style="font-size: 15px; font-family: montserrat">Enter the email address that you used for registration. <br>You will receive a 7-digit verification code.
+                        <p style="font-size: 15px; font-family: montserrat">Enter the email address that you used for
+                            registration. <br>You will receive a 7-digit verification code.
                         </p>
 
-                        <input style="text-transform: none; width: 500px; font-family: montserrat; margin-top: 5px" name="email" required placeholder="Email" type="email" maxlength="40" ;>
+                        <input style="text-transform: none; width: 500px; font-family: montserrat; margin-top: 5px"
+                            name="email" required placeholder="Email" type="email" maxlength="40" ;>
                         <br>
                         <br>
                         <!-- Next button -->
-                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;" type="submit" name="submit" value="Submit" class="form-btn">
+                        <input
+                            style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;"
+                            type="submit" name="submit" value="Submit" class="form-btn">
 
 
                     </form>
@@ -221,7 +211,9 @@ if (isset($_POST['submit'])) {
 
                     <h3><b>Our Mission</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine application that provides computer science students with accurate and relevant search results.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine
+                        application that provides computer science students with accurate and relevant search results.
+                    </p>
 
                 </div>
             </div>
@@ -229,7 +221,11 @@ if (isset($_POST['submit'])) {
                 <div class="contact-info">
                     <h3><b>Our Vision</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that provides computer science students with easy access to high-quality educational resources. Through advanced search filters, the application will help students find the resources they need quickly and efficiently. Ultimately, we aim to support students in their learning journey and help them achieve academic success.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that
+                        provides computer science students with easy access to high-quality educational resources.
+                        Through advanced search filters, the application will help students find the resources they need
+                        quickly and efficiently. Ultimately, we aim to support students in their learning journey and
+                        help them achieve academic success.</p>
 
                 </div>
             </div>
@@ -282,7 +278,7 @@ if (isset($_POST['submit'])) {
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.toggle-menu').jPushMenu({
                 closeOnClickLink: false
             });
@@ -292,7 +288,7 @@ if (isset($_POST['submit'])) {
 
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $.scrollUp({
                 scrollName: 'scrollUp', // Element ID
                 topDistance: '300', // Distance from top before showing element (px)
@@ -310,7 +306,7 @@ if (isset($_POST['submit'])) {
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#id_password');
 
-        togglePassword.addEventListener('click', function(e) {
+        togglePassword.addEventListener('click', function (e) {
             // toggle the type attribute
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);

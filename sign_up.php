@@ -23,7 +23,7 @@ if (isset($_POST['next'])) {
 
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $_SESSION['prof_username'] = $username;
-    $profile_username =  $_SESSION['prof_username'];
+    $profile_username = $_SESSION['prof_username'];
 
     $select_username = mysqli_query($conn, "SELECT * FROM `tblusers` WHERE username = '$username'");
     if (mysqli_num_rows($select_username) > 0) {
@@ -86,12 +86,6 @@ if (isset($_POST['next'])) {
 
 
 
-
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -194,25 +188,13 @@ if (isset($_POST['next'])) {
 
 <body>
 
-    <div class="loader"></div>
-
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -222,7 +204,8 @@ if (isset($_POST['next'])) {
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
+                    id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="index.php"><span>Home</span></a></li>
@@ -281,48 +264,75 @@ if (isset($_POST['next'])) {
                     <form name="contactForm" onsubmit="return validateForm()" method="POST" action="">
 
                         <!-- First name -->
-                        <input style="text-transform: capitalize; width:500px; font-family: Montserrat; margin-top: 5px;" type="text" name="firstname" onkeydown="return /[a-z, ]/i.test(event.key)" id="firstname" name="firstname" value="<?= isset($_SESSION['info']['firstname']) ? $_SESSION['info']['firstname'] : '' ?>" placeholder="First name" maxlength="40">
+                        <input
+                            style="text-transform: capitalize; width:500px; font-family: Montserrat; margin-top: 5px;"
+                            type="text" name="firstname" onkeydown="return /[a-z, ]/i.test(event.key)" id="firstname"
+                            name="firstname"
+                            value="<?= isset($_SESSION['info']['firstname']) ? $_SESSION['info']['firstname'] : '' ?>"
+                            placeholder="First name" maxlength="40">
                         <div class="error1" id="firstnameErr"></div>
 
                         <!-- Last name -->
-                        <input style="text-transform: capitalize; width:500px; font-family: Montserrat;" type="text" name="lastname" onkeydown="return /[a-z, ]/i.test(event.key)" id="lastname" name="lastname" value="<?= isset($_SESSION['info']['lastname']) ? $_SESSION['info']['lastname'] : '' ?>" placeholder="Last name" maxlength="40">
+                        <input style="text-transform: capitalize; width:500px; font-family: Montserrat;" type="text"
+                            name="lastname" onkeydown="return /[a-z, ]/i.test(event.key)" id="lastname" name="lastname"
+                            value="<?= isset($_SESSION['info']['lastname']) ? $_SESSION['info']['lastname'] : '' ?>"
+                            placeholder="Last name" maxlength="40">
                         <div class="error1" id="lastnameErr"></div>
 
                         <!-- Username -->
 
-                        <input style="text-transform: capitalize; width:500px; font-family: Montserrat;" type="text" maxlength="30" name="username" value="<?= isset($_SESSION['info']['username']) ? $_SESSION['info']['username'] : '' ?>" placeholder="Username">
+                        <input style="text-transform: capitalize; width:500px; font-family: Montserrat;" type="text"
+                            maxlength="30" name="username"
+                            value="<?= isset($_SESSION['info']['username']) ? $_SESSION['info']['username'] : '' ?>"
+                            placeholder="Username">
 
-                        <div class="popup" onclick="myFunction()"><i class="fa fa-info-circle" style="color: gray;" aria-hidden="true"></i>
-                            <span class="popuptext" id="myPopup">Usernames must contain 8 or more characters and must begin with a letter, include a number, and contain no special characters.</span>
+                        <div class="popup" onclick="myFunction()"><i class="fa fa-info-circle" style="color: gray;"
+                                aria-hidden="true"></i>
+                            <span class="popuptext" id="myPopup">Usernames must contain 8 or more characters and must
+                                begin with a letter, include a number, and contain no special characters.</span>
                         </div>
                         <?php
                         if (isset($errorusername)) {
                             foreach ($errorusername as $errorusername) {
                                 echo '<div class="error1">' . $errorusername . '</div>';
-                            };
-                        };
+                            }
+                            ;
+                        }
+                        ;
                         ?>
                         <div class="error1" id="usernameErr"></div>
 
                         <!-- Email -->
-                        <input style="text-transform: none; width:500px; font-family: Montserrat;" type="text" id="email" name="email" value="<?= isset($_SESSION['info']['email']) ? $_SESSION['info']['email'] : '' ?>" placeholder="Email">
+                        <input style="text-transform: none; width:500px; font-family: Montserrat;" type="text"
+                            id="email" name="email"
+                            value="<?= isset($_SESSION['info']['email']) ? $_SESSION['info']['email'] : '' ?>"
+                            placeholder="Email">
                         <?php
                         if (isset($erroremail)) {
                             foreach ($erroremail as $erroremail) {
                                 echo '<div class="error1">' . $erroremail . '</div>';
-                            };
-                        };
+                            }
+                            ;
+                        }
+                        ;
                         ?>
                         <div class="error1" id="emailErr"></div>
 
 
                         <!-- Password -->
                         <div>
-                            <input style=" text-transform: none; width: 500px; font-family: Montserrat;" type="password" id="password1" name="password" maxlength="30" value="<?= isset($_SESSION['info']['password']) ? $_SESSION['info']['password'] : '' ?>" placeholder="Password">
-                            <i class="far fa-eye" id="toggle-password1" style="margin-left: -35px; cursor: pointer;"></i>
-                            <div class="popup" onclick="myFunctionPass()"><i class="fa fa-info-circle" style="color: gray; text-indent: 14px" aria-hidden="true"></i>
+                            <input style=" text-transform: none; width: 500px; font-family: Montserrat;" type="password"
+                                id="password1" name="password" maxlength="30"
+                                value="<?= isset($_SESSION['info']['password']) ? $_SESSION['info']['password'] : '' ?>"
+                                placeholder="Password">
+                            <i class="far fa-eye" id="toggle-password1"
+                                style="margin-left: -35px; cursor: pointer;"></i>
+                            <div class="popup" onclick="myFunctionPass()"><i class="fa fa-info-circle"
+                                    style="color: gray; text-indent: 14px" aria-hidden="true"></i>
 
-                                <span class="popuptext" id="myPopupPass">Passwords must contain 8 or more characters with at least one number, one uppercase letter, one lowercase letter, and one special character.</span>
+                                <span class="popuptext" id="myPopupPass">Passwords must contain 8 or more characters
+                                    with at least one number, one uppercase letter, one lowercase letter, and one
+                                    special character.</span>
                             </div>
                             <div class="error1" id="passwordErr"></div>
                         </div>
@@ -330,14 +340,20 @@ if (isset($_POST['next'])) {
 
                         <!-- Confirm password -->
                         <div>
-                            <input style="text-transform: none; width:500px; font-family: Montserrat;" onpaste="return false;" type="password" name="confirmpassword" id="password2" value="<?= isset($_SESSION['info']['confirmpassword']) ? $_SESSION['info']['confirmpassword'] : '' ?>" maxlength="30" placeholder="Confirm Password">
-                            <i class="far fa-eye" id="toggle-password2" style="margin-left: -35px; cursor: pointer;"></i>
+                            <input style="text-transform: none; width:500px; font-family: Montserrat;"
+                                onpaste="return false;" type="password" name="confirmpassword" id="password2"
+                                value="<?= isset($_SESSION['info']['confirmpassword']) ? $_SESSION['info']['confirmpassword'] : '' ?>"
+                                maxlength="30" placeholder="Confirm Password">
+                            <i class="far fa-eye" id="toggle-password2"
+                                style="margin-left: -35px; cursor: pointer;"></i>
                             <div class="error1" id="confirmpasswordErr"></div>
                         </div>
                         <br>
                         <!-- Terms and conditions -->
-                        <p style=" font-size:13px; font-family: montserrat;">Before clicking <b>Sign-up,</b> you must read and answer the captcha in the <b> <!-- Button trigger modal -->
-                                <a style="cursor: pointer; color:#000" data-toggle="modal" data-target="#exampleModalLong">
+                        <p style=" font-size:13px; font-family: montserrat;">Before clicking <b>Sign-up,</b> you must
+                            read and answer the captcha in the <b> <!-- Button trigger modal -->
+                                <a style="cursor: pointer; color:#000" data-toggle="modal"
+                                    data-target="#exampleModalLong">
                                     Terms and Conditions
                                 </a></b></p>
 
@@ -346,38 +362,70 @@ if (isset($_POST['next'])) {
 
 
                         <!-- Modal -->
-                        <div style="font-family: montserrat;" class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div style="font-family: montserrat;" class="modal fade" id="exampleModalLong" tabindex="-1"
+                            role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">SearchSerpent | Terms and Conditions</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">SearchSerpent | Terms and
+                                            Conditions</h5>
                                         </button>
                                     </div>
                                     <div class="modal-body">
 
 
-                                        Welcome to the <b>SearchSerpent engine!</b> an educational web search engine application that can filter out irrelevant information which helps students to navigate information, particularly in computer science-related fields. These are our Terms & Conditions for the use of the network. You may access it in several ways but is intended for computer science-related courses only. Your changed or revised Agreement will constitute your acceptance of any such changes, or of a revised Agreement will constitute your acceptance of any such changes or revisions. If you continue to browse and use this website. In that case, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern our relationship with you in relation to this website.
+                                        Welcome to the <b>SearchSerpent engine!</b> an educational web search engine
+                                        application that can filter out irrelevant information which helps students to
+                                        navigate information, particularly in computer science-related fields. These are
+                                        our Terms & Conditions for the use of the network. You may access it in several
+                                        ways but is intended for computer science-related courses only. Your changed or
+                                        revised Agreement will constitute your acceptance of any such changes, or of a
+                                        revised Agreement will constitute your acceptance of any such changes or
+                                        revisions. If you continue to browse and use this website. In that case, you are
+                                        agreeing to comply with and be bound by the following terms and conditions of
+                                        use, which together with our privacy policy govern our relationship with you in
+                                        relation to this website.
                                         <br>
                                         <br>
                                         <b>What’s covered in these terms:</b>
                                         <br>
-                                        1. The information on these pages is provided solely for your general information and use. It is subject to change at any time.
+                                        1. The information on these pages is provided solely for your general
+                                        information and use. It is subject to change at any time.
                                         <br>
-                                        2. We and third parties provide no warranty or guarantee about the accuracy, timeliness, performance, completeness, or suitability of the information and contents found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or omissions, for which we expressly disclaim liability to the fullest extent permitted by law.
+                                        2. We and third parties provide no warranty or guarantee about the accuracy,
+                                        timeliness, performance, completeness, or suitability of the information and
+                                        contents found or offered on this website for any particular purpose. You
+                                        acknowledge that such information and materials may contain inaccuracies or
+                                        omissions, for which we expressly disclaim liability to the fullest extent
+                                        permitted by law.
                                         <br>
-                                        3. You use any information or content on this website totally at your own risk, for which we accept no responsibility. It is your duty to ensure that any products, services, or information obtained from this website satisfy your unique needs. This website contains material that is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance, and graphics.
+                                        3. You use any information or content on this website totally at your own risk,
+                                        for which we accept no responsibility. It is your duty to ensure that any
+                                        products, services, or information obtained from this website satisfy your
+                                        unique needs. This website contains material that is owned by or licensed to us.
+                                        This material includes, but is not limited to, the design, layout, look,
+                                        appearance, and graphics.
                                         <br>
-                                        4. Other than in conformity with the copyright notice, which is part of these terms and conditions, reproduction is prohibited.
+                                        4. Other than in conformity with the copyright notice, which is part of these
+                                        terms and conditions, reproduction is prohibited.
                                         <br>
-                                        5. The operator acknowledges all trademarks reproduced on this website that is not owned by or licensed to him. Illegal use of this website may result in a civil claim and/or a criminal violation.
+                                        5. The operator acknowledges all trademarks reproduced on this website that is
+                                        not owned by or licensed to him. Illegal use of this website may result in a
+                                        civil claim and/or a criminal violation.
                                         <br>
-                                        6. This website may contain connections to other websites from time to time. These links are offered for your convenience in order to provide additional information. These do not imply that we support the website (s). We accept no responsibility for the linked website's content (s).
+                                        6. This website may contain connections to other websites from time to time.
+                                        These links are offered for your convenience in order to provide additional
+                                        information. These do not imply that we support the website (s). We accept no
+                                        responsibility for the linked website's content (s).
                                         <br>
-                                        7. Your use of this website, as well as any dispute resulting from such use, is governed by the laws of the Republic of the Philippines.
+                                        7. Your use of this website, as well as any dispute resulting from such use, is
+                                        governed by the laws of the Republic of the Philippines.
                                         <br>
                                         <br>
                                         <b>Disclaimer:</b>
-                                        We know it’s tempting to skip these Terms & conditions, but it’s important to establish what you can expect from us as you use SearchSerpent, and what we expect from you. Please do use our website.
+                                        We know it’s tempting to skip these Terms & conditions, but it’s important to
+                                        establish what you can expect from us as you use SearchSerpent, and what we
+                                        expect from you. Please do use our website.
 
                                         <br>
                                         <br>
@@ -390,13 +438,17 @@ if (isset($_POST['next'])) {
                                         Good day searchers! This is SearchSerpent Engine’s Privacy Policy.
                                         <br>
                                         <br>
-                                        This page is used to inform website visitors regarding our policies regarding the collection, use, and disclosure of Personal Information
+                                        This page is used to inform website visitors regarding our policies regarding
+                                        the collection, use, and disclosure of Personal Information
                                         <br>
                                         <br>
-                                        If you choose to use our Service, then you agree to the collection and use of information in relation to this policy.
+                                        If you choose to use our Service, then you agree to the collection and use of
+                                        information in relation to this policy.
                                         <br>
                                         <br>
-                                        Personal Information is often, but not exclusively, provided to us when you sign up for and use the site based on RA 10173 ( Data Privacy Act of 2012) protects the privacy o
+                                        Personal Information is often, but not exclusively, provided to us when you sign
+                                        up for and use the site based on RA 10173 ( Data Privacy Act of 2012) protects
+                                        the privacy o
                                         f individuals while ensuring the free flow of information.
                                         <br>
                                         <br>
@@ -414,19 +466,22 @@ if (isset($_POST['next'])) {
 
                                         <b>Purpose of Data Collection and Processing</b>
                                         <br>
-                                        The purpose of gathering the data is to provide content for data analysis, the information gathered must be of the highest quality for it to be of value.
+                                        The purpose of gathering the data is to provide content for data analysis, the
+                                        information gathered must be of the highest quality for it to be of value.
                                         <br>
                                         <br>
 
                                         <b>Data Security</b>
                                         <br>
-                                        Protecting your data information accounts for the sensitivity of various datasets and corresponding to regulatory compliance requirements
+                                        Protecting your data information accounts for the sensitivity of various
+                                        datasets and corresponding to regulatory compliance requirements
                                         <br>
                                         <br>
 
                                         <b> Data Retention</b>
                                         <br>
-                                        Information should only be retained as long as necessary to fulfill the original purpose(s) for the data collected.
+                                        Information should only be retained as long as necessary to fulfill the original
+                                        purpose(s) for the data collected.
                                         <br>
                                         <br>
 
@@ -438,7 +493,8 @@ if (isset($_POST['next'])) {
 
                                         <b> Your Rights</b>
                                         <br>
-                                        Personal information controller, or the personal information processor, violated your rights as a data subject.
+                                        Personal information controller, or the personal information processor, violated
+                                        your rights as a data subject.
                                         <br>
                                         <br>
 
@@ -449,11 +505,13 @@ if (isset($_POST['next'])) {
                                         <br>
                                         <br>
 
-                                        We will provide notice of the modification by email if having a technical problem.
+                                        We will provide notice of the modification by email if having a technical
+                                        problem.
                                         <br><br>
 
 
-                                        Contact the SearchSerpent to Integrate the service with another website or services.
+                                        Contact the SearchSerpent to Integrate the service with another website or
+                                        services.
                                         <br>
                                         <br>
 
@@ -464,11 +522,13 @@ if (isset($_POST['next'])) {
                                         <hr style="border: 1px solid black;">
                                         <br>
                                         <!-- custom captcha -->
-                                        <p style="font-size: 16px; text-align: left;color: #03001C; font-family: Montserrat;">
+                                        <p
+                                            style="font-size: 16px; text-align: left;color: #03001C; font-family: Montserrat;">
                                             <font color="red">*</font>Captcha
                                         </p>
                                         <div class="wrapper">
-                                            <canvas style="border-style: outset;" id="canvas" width="200" height="70"></canvas>
+                                            <canvas style="border-style: outset;" id="canvas" width="200"
+                                                height="70"></canvas>
                                             <br>
                                             <button style="  background-color:#000;
                     border: none;
@@ -483,15 +543,20 @@ if (isset($_POST['next'])) {
                     font-family: Montserrat;" id="reload-button"> Try another
                                             </button>
                                         </div>
-                                        <input style="width:500px; font-family: Montserrat; margin-top: 2px;" type="text" id="userInput" placeholder="Enter the text from the image above" />
+                                        <input style="width:500px; font-family: Montserrat; margin-top: 2px;"
+                                            type="text" id="userInput"
+                                            placeholder="Enter the text from the image above" />
                                         <div class="error1" id="userInputErr"></div>
                                         <br>
                                         <!-- Next button -->
-                                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; padding-top: 9px; margin-top: 4px; font-family: Montserrat;" type="submit" name="next" id="next" value="Agree" class="form-btn">
+                                        <input
+                                            style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; padding-top: 9px; margin-top: 4px; font-family: Montserrat;"
+                                            type="submit" name="next" id="next" value="Agree" class="form-btn">
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button style="font-family: montserrat; color:#F5F5F5; background-color:#000;" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button style="font-family: montserrat; color:#F5F5F5; background-color:#000;"
+                                            type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                                     </div>
                                 </div>
@@ -499,7 +564,9 @@ if (isset($_POST['next'])) {
                         </div>
 
                         <!-- Next button -->
-                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; padding-top: 9px; margin-top: 4px; font-family: Montserrat;" type="submit" name="next" id="next" value="Sign-up" class="form-btn">
+                        <input
+                            style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; padding-top: 9px; margin-top: 4px; font-family: Montserrat;"
+                            type="submit" name="next" id="next" value="Sign-up" class="form-btn">
                     </form>
                 </div>
             </div>
@@ -512,7 +579,9 @@ if (isset($_POST['next'])) {
 
                     <h3><b>Our Mission</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine application that provides computer science students with accurate and relevant search results.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine
+                        application that provides computer science students with accurate and relevant search results.
+                    </p>
 
                 </div>
             </div>
@@ -520,7 +589,11 @@ if (isset($_POST['next'])) {
                 <div class="contact-info">
                     <h3><b>Our Vision</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that provides computer science students with easy access to high-quality educational resources. Through advanced search filters, the application will help students find the resources they need quickly and efficiently. Ultimately, we aim to support students in their learning journey and help them achieve academic success.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that
+                        provides computer science students with easy access to high-quality educational resources.
+                        Through advanced search filters, the application will help students find the resources they need
+                        quickly and efficiently. Ultimately, we aim to support students in their learning journey and
+                        help them achieve academic success.</p>
 
                 </div>
             </div>
@@ -573,7 +646,7 @@ if (isset($_POST['next'])) {
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.toggle-menu').jPushMenu({
                 closeOnClickLink: false
             });
@@ -583,7 +656,7 @@ if (isset($_POST['next'])) {
 
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $.scrollUp({
                 scrollName: 'scrollUp', // Element ID
                 topDistance: '300', // Distance from top before showing element (px)
@@ -624,14 +697,14 @@ if (isset($_POST['next'])) {
         const password2 = document.querySelector('#password2');
 
         // Toggle the visibility of password 1
-        togglePassword1.addEventListener('click', function() {
+        togglePassword1.addEventListener('click', function () {
             const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
             password1.setAttribute('type', type);
             togglePassword1.classList.toggle('fa-eye-slash');
         });
 
         // Toggle the visibility of password 2
-        togglePassword2.addEventListener('click', function() {
+        togglePassword2.addEventListener('click', function () {
             const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
             password2.setAttribute('type', type);
             togglePassword2.classList.toggle('fa-eye-slash');

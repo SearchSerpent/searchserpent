@@ -21,11 +21,7 @@
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -33,26 +29,15 @@
 
 <body>
 
-    <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
 
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -62,7 +47,8 @@
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
+                    id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="home.php"><span>Home</span></a></li>
@@ -164,11 +150,13 @@
                         <div class="info">
                             <ul class="item-list">
                                 <li>
-                                    Discover the best coding language to learn for a variety of applications. Choose the right coding languages to launch your programming career.
+                                    Discover the best coding language to learn for a variety of applications. Choose the
+                                    right coding languages to launch your programming career.
                                     <br>
                                     <br>
                                 </li>
-                                <li><a style="color:darkgray; text-decoration: none;" href="learn1.php" target="_blank"><button type="button">View</button></a></li>
+                                <li><a style="color:darkgray; text-decoration: none;" href="learn1.php"
+                                        target="_blank"><button type="button">View</button></a></li>
                             </ul>
                         </div>
                     </div>
@@ -186,10 +174,13 @@
 
                         <div class="info">
                             <ul class="item-list">
-                                <li>Programming is the act of instructing computers to carry out tasks. It is the process of designing, writing, testing, and maintaining source code for computer software.
+                                <li>Programming is the act of instructing computers to carry out tasks. It is the
+                                    process of designing, writing, testing, and maintaining source code for computer
+                                    software.
                                     <br>
                                 </li>
-                                <li><a style="color:darkgray; text-decoration: none;" href="learn2.php" target="_blank"><button type="button">View</button></a></li>
+                                <li><a style="color:darkgray; text-decoration: none;" href="learn2.php"
+                                        target="_blank"><button type="button">View</button></a></li>
                             </ul>
                         </div>
                     </div>
@@ -208,13 +199,15 @@
 
                         <div class="info">
                             <ul class="item-list">
-                                <li> The accelerating volume of data sources, and subsequently data, has made data science is one of the
+                                <li> The accelerating volume of data sources, and subsequently data, has made data
+                                    science is one of the
                                     fastest growing field across every industry.
 
                                     <br>
                                     <br>
                                 </li>
-                                <li><a style="color:darkgray; text-decoration: none;" href="learn3.php" target="_blank"><button type="button">View</button></a></li>
+                                <li><a style="color:darkgray; text-decoration: none;" href="learn3.php"
+                                        target="_blank"><button type="button">View</button></a></li>
                             </ul>
                         </div>
                     </div>
@@ -280,7 +273,7 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.toggle-menu').jPushMenu({
                 closeOnClickLink: false
             });
@@ -290,7 +283,7 @@
 
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $.scrollUp({
                 scrollName: 'scrollUp', // Element ID
                 topDistance: '300', // Distance from top before showing element (px)
