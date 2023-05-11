@@ -21,7 +21,8 @@ try {
       );
       $count = $userrow->rowCount();
       if ($count > 0) {
-        foreach ($userrow as $result);
+        foreach ($userrow as $result)
+          ;
         $_SESSION['userid'] = $result['id'];
         header('location: admin_panel.php');
       } else {
@@ -44,7 +45,8 @@ try {
   <title>Admin - SearchSerpent</title>
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
@@ -56,7 +58,7 @@ try {
 
   <style>
     body {
-      background-image: url('images/banner2.jpg');
+      /* xenomorph gone */
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: 100% 100%;
@@ -70,15 +72,17 @@ try {
     <div style="border: none;" class="card card-outline card-primary">
       <div class="card-header text-center">
         <img src="images/logo.png" height="30px" width="120px">
-        <p class="h1">Administrator</p>
+        <h2>Sign In as Administrator</h2>
       </div>
       <div class="card-body">
         <center>
-          <font color="red"> <?php
-                              if (isset($message)) {
-                                echo $message;
-                              }
-                              ?></font>
+          <font color="red">
+            <?php
+            if (isset($message)) {
+              echo $message;
+            }
+            ?>
+          </font>
         </center>
         <br>
         <form method="POST">
@@ -88,7 +92,8 @@ try {
             <p></p>
           </div>
           <div>
-            <div><input style="width: 320px;" type="password" required name="password" id="id_password" placeholder="Password"><i style="margin-left: -30px;" class="far fa-eye" id="togglePassword"></i></div>
+            <div><input style="width: 320px;" type="password" required name="password" id="id_password"
+                placeholder="Password"><i style="margin-left: -30px;" class="far fa-eye" id="togglePassword"></i></div>
             <br>
 
           </div>
@@ -96,7 +101,8 @@ try {
 
             <!-- /.col -->
             <div class="col-4">
-              <button style="background-color: black; border: none;" type="submit" name="login" class="btn btn-primary btn-block">Sign In</button>
+              <button style="background-color: black; border: none;" type="submit" name="login"
+                class="btn btn-primary btn-block">Sign In</button>
             </div>
             <!-- /.col -->
           </div>
@@ -117,7 +123,7 @@ try {
           const togglePassword = document.querySelector('#togglePassword');
           const password = document.querySelector('#id_password');
 
-          togglePassword.addEventListener('click', function(e) {
+          togglePassword.addEventListener('click', function (e) {
             // toggle the type attribute
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
