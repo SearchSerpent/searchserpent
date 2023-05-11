@@ -332,7 +332,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
             $newImageName .= '.' . $imageExtension;
             $query = "UPDATE tblusers SET Photo = '$newImageName' WHERE id = $id";
             mysqli_query($conn, $query);
-            move_uploaded_file($tmpName, '../searchserpent-admin/upload/' . $newImageName);
+            move_uploaded_file($tmpName, '../admin/upload/' . $newImageName);
             echo
                 "
         <script>
