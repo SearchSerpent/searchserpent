@@ -9,7 +9,7 @@ session_start();
 $_SESSION['myFirstname'];
 $_SESSION['myVariable'];
 $veremail = $_SESSION['myVariable'];
-$firstname =  $_SESSION['myFirstname'];
+$firstname = $_SESSION['myFirstname'];
 $lastname = $_SESSION['myLastname'];
 
 
@@ -17,7 +17,7 @@ if (!isset($_SESSION['vercoderegistration']) || $_SESSION['verification_code_use
 
     // Generate a new random verification code between 1000000 and 9999999 (inclusive)
     $_SESSION['myVercode'] = mt_rand(1000000, 9999999);
-    $vercode =  $_SESSION['myVercode'];
+    $vercode = $_SESSION['myVercode'];
 
     // Store the new verification code in the session variable
     $_SESSION['vercoderegistration'] = $vercode;
@@ -43,22 +43,22 @@ $mail = new PHPMailer(true);
 
 try {
     //Server settings
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'leitechcorp@gmail.com';                     //SMTP username
-    $mail->Password   = 'syahozrdvgsvsrgg';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->isSMTP(); //Send using SMTP
+    $mail->Host = 'smtp.gmail.com'; //Set the SMTP server to send through
+    $mail->SMTPAuth = true; //Enable SMTP authentication
+    $mail->Username = 'leitechcorp@gmail.com'; //SMTP username
+    $mail->Password = 'syahozrdvgsvsrgg'; //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
+    $mail->Port = 465; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
     $mail->setFrom('gadingan.joko.bscs2020@gmail.com', 'Search Serpent');
-    $mail->addAddress($veremail);     //Add a recipient
+    $mail->addAddress($veremail); //Add a recipient
 
     //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->isHTML(true); //Set email format to HTML
     $mail->Subject = 'Verification code for account registration';
-    $mail->Body    = "Dear " . "$firstname " . "$lastname,<br><br>" .
+    $mail->Body = "Dear " . "$firstname " . "$lastname,<br><br>" .
 
         "Greetings from the SearchSerpent team! We're thrilled that you've recently registered for an account with us. <br><br>" .
 
@@ -101,11 +101,7 @@ if (isset($_POST['submit'])) {
 
             extract($_SESSION['info']);
 
-            $conn = mysqli_connect(
-            'sql202.epizy.com', 
-            'epiz_33766646', 
-            'VdVPgo6knnpO', 
-            'epiz_33766646_pdocrud');
+            $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
             $name = $firstname . ' ' . $lastname;
             $user_type = "user";
             $img = "Default.jpg";
@@ -172,14 +168,14 @@ if (isset($_POST['submit'])) {
             window.history.forward();
         }
         setTimeout("preback()", 0);
-        window.onunload = function() {
+        window.onunload = function () {
             null
         };
     </script>
 
 
     <script type="text/javascript">
-        $(window).load(function() {
+        $(window).load(function () {
             $(".loader").fadeOut("slow");
         })
     </script>
@@ -307,7 +303,8 @@ if (isset($_POST['submit'])) {
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -317,7 +314,8 @@ if (isset($_POST['submit'])) {
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
+                    id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="index.php"><span>Home</span></a></li>
@@ -373,13 +371,13 @@ if (isset($_POST['submit'])) {
             <div class="col-md-8">
                 <?php
                 if (isset($error)) {
-                ?>
+                    ?>
                     <div style="width: 500px;" class="alert alert-danger" role="alert">
                         <center>
                             <p> Incorrect verification code.</p>
                         </center>
                     </div>
-                <?php
+                    <?php
                     unset($error);
                 }
 
@@ -392,18 +390,27 @@ if (isset($_POST['submit'])) {
 
 
 
-                        <p style="font-size: 15px; font-family: Montserrat;">The verification code has been sent to your email address:
+                        <p style="font-size: 15px; font-family: Montserrat;">The verification code has been sent to your
+                            email address:
                         </p><b>
-                            <p style="font-family: montserrat; font-size: 15px;"><?php echo $_SESSION['myVariable']; ?>
+                            <p style="font-family: montserrat; font-size: 15px;">
+                                <?php echo $_SESSION['myVariable']; ?>
                         </b></p>
 
-                        <input style="text-transform: none; width:500px; font-size: 15px; font-family:montserrat; margin-bottom: 5px; margin-top: 5px;" name="vercoderegistration" placeholder="Verification code" type="text" maxlength="7" onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" value="<?= isset($_SESSION['info']['vercoderegistration']) ? $_SESSION['info']['vercoderegistration'] : '' ?>">
+                        <input
+                            style="text-transform: none; width:500px; font-size: 15px; font-family:montserrat; margin-bottom: 5px; margin-top: 5px;"
+                            name="vercoderegistration" placeholder="Verification code" type="text" maxlength="7"
+                            onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));"
+                            value="<?= isset($_SESSION['info']['vercoderegistration']) ? $_SESSION['info']['vercoderegistration'] : '' ?>">
                         <div class="error1" id="vercoderegistrationErr"></div>
 
 
-                        <p style="font-size: 14px; font-family: Montserrat;">Didn't receive a verification code? <a href=" vercode_registration.php" style="color:#000;">Resend</a></p>
+                        <p style="font-size: 14px; font-family: Montserrat;">Didn't receive a verification code? <a
+                                href=" vercode_registration.php" style="color:#000;">Resend</a></p>
 
-                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-family: montserrat; font-size: 16px; width: 120px; height: 40px; padding-top: 9px; margin-top: 5px;" type="submit" name="submit" id="next" value="Verify" class="form-btn">
+                        <input
+                            style="color:#F5F5F5; background-color:#000; text-transform:none; font-family: montserrat; font-size: 16px; width: 120px; height: 40px; padding-top: 9px; margin-top: 5px;"
+                            type="submit" name="submit" id="next" value="Verify" class="form-btn">
 
                     </form>
                 </div>
@@ -417,7 +424,9 @@ if (isset($_POST['submit'])) {
 
                     <h3><b>Our Mission</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine application that provides computer science students with accurate and relevant search results.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine
+                        application that provides computer science students with accurate and relevant search results.
+                    </p>
 
                 </div>
             </div>
@@ -425,7 +434,11 @@ if (isset($_POST['submit'])) {
                 <div class="contact-info">
                     <h3><b>Our Vision</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that provides computer science students with easy access to high-quality educational resources. Through advanced search filters, the application will help students find the resources they need quickly and efficiently. Ultimately, we aim to support students in their learning journey and help them achieve academic success.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that
+                        provides computer science students with easy access to high-quality educational resources.
+                        Through advanced search filters, the application will help students find the resources they need
+                        quickly and efficiently. Ultimately, we aim to support students in their learning journey and
+                        help them achieve academic success.</p>
 
                 </div>
             </div>
@@ -477,7 +490,7 @@ if (isset($_POST['submit'])) {
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.toggle-menu').jPushMenu({
                 closeOnClickLink: false
             });
@@ -487,7 +500,7 @@ if (isset($_POST['submit'])) {
 
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $.scrollUp({
                 scrollName: 'scrollUp', // Element ID
                 topDistance: '300', // Distance from top before showing element (px)

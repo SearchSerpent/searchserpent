@@ -2,7 +2,7 @@
 
 @include 'dbconfig.php';
 
-$conn = mysqli_connect('localhost', 'root', '', 'pdocrud');
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
 
 session_start();
 

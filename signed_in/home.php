@@ -7,8 +7,7 @@ session_start();
 if (isset($_SESSION['info'])) {
 
     extract($_SESSION['info']);
-
-    $conn = mysqli_connect('sql202.epizy.com', 'epiz_33766646', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud') or die('connection failed');
+    $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
     $name = $firstname . ' ' . $lastname;
     $user_type = "user";
     $img = "noprofil.jpg";

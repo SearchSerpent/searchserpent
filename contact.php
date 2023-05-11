@@ -5,7 +5,7 @@ include 'dbconfig.php';
 session_start();
 
 if (isset($_POST['send'])) {
-    $conn = mysqli_connect('localhost', 'root', '', 'pdocrud');
+    $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
 
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
