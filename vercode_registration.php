@@ -101,7 +101,7 @@ if (isset($_POST['submit'])) {
 
             extract($_SESSION['info']);
 
-            $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
+            $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
             $name = $firstname . ' ' . $lastname;
             $user_type = "user";
             $img = "Default.jpg";

@@ -84,8 +84,7 @@
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -99,8 +98,7 @@
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
-                    id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
 
@@ -122,8 +120,7 @@
 
 
                     <div style="color: white;" class="card-tools">
-                        <a style="background-color: #007bff; border-style: none; color: white;" class="btn btn-tool"
-                            href="admin_panel.php">
+                        <a style="background-color: #007bff; border-style: none; color: white;" class="btn btn-tool" href="admin_panel.php">
                             <font color: White>Home</font>
                         </a>
 
@@ -152,41 +149,28 @@
 
                             if (isset($_GET['delete'])) {
                                 $delete_id = $_GET['delete'];
-                                mysqli_query($conn, "DELETE FROM `message` WHERE id = '$delete_id'");
+                                mysqli_query($conn, "DELETE FROM `message` WHERE id = '$delete_id'") or die('query failed');
                             }
 
                             $cnt = 1;
                             if ($query->rowCount() > 0) {
                                 foreach ($results as $result) {
-                                    ?>
+                            ?>
                                     <tr>
 
                                         <?php htmlentities($result->id); ?>
-                                        <td style="text-transform: capitalize;">
-                                            <?php echo htmlentities($result->name); ?>
-                                        </td>
-                                        <td>
-                                            <?php echo htmlentities($result->EmailId); ?>
-                                        </td>
-                                        <td>
-                                            <?php echo htmlentities($result->message); ?>
-                                        </td>
-                                        <td>
-                                            <?php echo htmlentities($result->PostingDate); ?>
-                                        </td>
+                                        <td style="text-transform: capitalize;"><?php echo htmlentities($result->name); ?></td>
+                                        <td><?php echo htmlentities($result->EmailId); ?></td>
+                                        <td><?php echo htmlentities($result->message); ?></td>
+                                        <td><?php echo htmlentities($result->PostingDate); ?></td>
 
                                         <td>
-                                            <a style="color: white; background-color: #379237; border: none;"
-                                                href="reply.php?id=<?php echo htmlentities($result->id); ?>"
-                                                class="btn btn-primary btn-sm"><span class="fas fa-reply"></span></a>
-                                            <a style="color: white; background-color: #DF2E38; border: none;"
-                                                href="message.php?delete=<?php echo htmlentities($result->id); ?>"
-                                                onclick="return confirm('delete this user?');"
-                                                class="btn btn-danger btn-sm"><span class="fas fa-trash"></span></a>
+                                            <a style="color: white; background-color: #379237; border: none;" href="reply.php?id=<?php echo htmlentities($result->id); ?>" class="btn btn-primary btn-sm"><span class="fas fa-reply"></span></a>
+                                            <a style="color: white; background-color: #DF2E38; border: none;" href="message.php?delete=<?php echo htmlentities($result->id);  ?>" onclick="return confirm('delete this user?');" class="btn btn-danger btn-sm"><span class="fas fa-trash"></span></a>
                                         </td>
                                     </tr>
 
-                                    <?php
+                            <?php
                                     $cnt++;
                                 }
                             }
@@ -234,7 +218,7 @@
         $.widget.bridge('uibutton', $.ui.button)
     </script>
     <script>
-        $(function () {
+        $(function() {
             $("#example1").DataTable({
                 "responsive": true,
                 "autoWidth": false,
