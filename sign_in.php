@@ -4,10 +4,7 @@
 
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
 
-
-
 session_start();
-
 session_unset();
 
 
@@ -55,11 +52,13 @@ if (isset($_POST['submit'])) {
             $_SESSION['myVariable'] = $row['EmailId'];
             $_SESSION['myUsername'] = $row['username'];
             $_SESSION['user_id'] = $row['id'];
-            header('location:signed_in/home.php');
+            header('location:signed_in/signed_in_home.php');
         }
     } else {
     }
 }
+
+
 
 ?>
 
@@ -92,6 +91,11 @@ if (isset($_POST['submit'])) {
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
 
+    <script type="text/javascript">
+        $(window).load(function () {
+            $(".loader").fadeOut("slow");
+        })
+    </script>
 
 
 
@@ -101,7 +105,19 @@ if (isset($_POST['submit'])) {
 
 <body>
 
+    <div class="loader"></div>
 
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        }
+    </style>
 
     <header>
 
@@ -170,6 +186,56 @@ if (isset($_POST['submit'])) {
             input.larger {
                 width: 10px;
                 height: 10px;
+            }
+        </style>
+
+
+        <style>
+            .login-with-google-btn {
+                width: 50%;
+                transition: background-color 0.3s, box-shadow 0.3s;
+                padding: 12px 16px 12px 42px;
+                border: none;
+                border-radius: 5px;
+                box-shadow: 0 -1px 0 rgb(0 0 0 / 10%), 1px 1px 1px rgb(0 0 0 / 25%);
+                color: black;
+                font-size: 16px;
+                font-family: montserrat;
+                background-color: white;
+                background-repeat: no-repeat;
+                background-position: 12px 11px;
+                text-decoration: none;
+                display: inline-block;
+                width: 500px;
+                text-align: center;
+                height: 40px;
+                margin-top: -20px;
+                padding-top: 9px;
+
+            }
+
+            .login-with-google-btn:hover {
+
+                text-decoration: none;
+            }
+
+            .login-with-google-btn:active {
+                background-color: white;
+                text-decoration: none;
+            }
+
+            .login-with-google-btn:focus {
+                outline: none;
+                box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25), 0 0 0 3px #c8dafc;
+                text-decoration: none;
+            }
+
+            .login-with-google-btn:disabled {
+                filter: grayscale(100%);
+                background-color: #ebebeb;
+                box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
+                cursor: not-allowed;
+                text-decoration: none;
             }
         </style>
 
@@ -254,16 +320,21 @@ if (isset($_POST['submit'])) {
                         <a href="forgot_password.php"
                             style="color: #000; font-family: montserrat; line-height: 2">Forgot password?</a></p>
 
+
                         <!-- Next button -->
                         <input
-                            style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;"
+                            style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 500px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;"
                             type="submit" name="submit" value="Sign-in" class="form-btn">
-
-
-
-                        <p style="font-size: 15px; font-family: Montserrat; margin-top: 7px;">Don't have an account? <a
-                                href="sign_up.php" style="color: #000">Sign-up now!</a></p>
+                        <br>
+                        <br>
+                        <a type="button" class="login-with-google-btn button1" href="login.php">
+                            Sign in with Google
+                        </a>
                     </form>
+
+                    <br>
+                    <p style="font-size: 15px;font-family: Montserrat; margin-top: 7px;">Don't have an account? <a
+                            href="sign_up.php" style="color: #000">Sign-up now!</a></p>
                 </div>
             </div>
 
