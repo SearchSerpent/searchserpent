@@ -2,7 +2,7 @@
 
 @include 'dbconfig.php';
 
-$conn = mysqli_connect('sql202.epizy.com', 'epiz_33766646', 'VdVPgo6knnpO', 'epiz_33766646_pdocrud');
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
 
 session_start();
 
@@ -136,7 +136,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
     <center>
         <p style="font-size: 25px; font-family: montserrat;"><b>Profile Information</b></p>
     </center>
-    <div style="border-style: solid; border-color: gray; width: 500px; margin:auto">
+    <div style="border-style: solid; border-color: gray; width: 500px; max-width:100%; margin:auto">
 
         <br>
         <form class="form" id="form" action="" enctype="multipart/form-data" method="post">
@@ -146,8 +146,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
                 $name = $user["name"];
                 $image = $user["Photo"];
                 ?>
-                <img src="../searchserpent-admin/upload/<?php echo $image; ?>" width=125 height=125
-                    title="<?php echo $image; ?>">
+                <img src="../admin/upload/<?php echo $image; ?>" width=125 height=125 title="<?php echo $image; ?>">
                 <div class="round">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="name" value="<?php echo $name; ?>">

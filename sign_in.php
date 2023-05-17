@@ -246,7 +246,7 @@ if (isset($_POST['submit'])) {
                             placeholder="Email or username">
 
                         <div>
-                            <input style="width:100%; font-family: montserrat" type="password" id="id_password"
+                            <input style="width:500px; font-family: montserrat" type="password" id="id_password"
                                 name="password" required placeholder="Password">
                             <i class="far fa-eye" id="togglePassword" style="margin-left: -35px; cursor: pointer;"></i>
                         </div>

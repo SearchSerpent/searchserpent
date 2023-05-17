@@ -142,7 +142,10 @@
             </thead>
             <tbody>
               <?php
-              $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
+
+              include 'dbconfig.php';
+
+              $conn = mysqli_connect(DB_HOST,DB_USER , DB_PASS, DB_NAME) or die('connection failed');
               $sql = "SELECT * FROM tblusers";
               $query = $dbh->prepare($sql);
               $query->execute();

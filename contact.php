@@ -168,8 +168,7 @@ if (isset($_POST['send'])) {
                         <input style="width: 500px; font-family:montserrat;" type="email" name="email" required
                             placeholder="Email" class="box">
 
-                        <textarea name="message" class="box" placeholder="Message here" id="" cols="20" rows="5"
-                            style="width: 500px; font-family: montserrat;" required></textarea>
+                      <textarea name="message" class="box" placeholder="Message here" id="" cols="20" rows="5" style="width: 500px;max-width: 100%;font-family: montserrat;" required=""></textarea>
                         <br>
 
                         <!-- Send button -->

@@ -1,5 +1,9 @@
-RewriteEngine On
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteCond %{HTTPS} off
-RewriteCond %{HTTP:CF-Visitor} !{"scheme":"https"}
+RewriteEngine On
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:CF-Visitor} !{"scheme":"https"}
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+AddType application/manifest+json .json
+
+AddCharset UTF-8 .json

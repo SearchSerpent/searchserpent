@@ -25,7 +25,7 @@ unset($_SESSION['message']);
 
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
     <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
 
@@ -34,35 +34,11 @@ unset($_SESSION['message']);
     <script src="js/jPushMenu.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
-
-    <script>
-        window.addEventListener('load', () => {
-            registerSW();
-        });
-
-        async function registerSW() {
-            if ('serviceWorker' in navigator) {
-                try {
-                    await navigator.serviceWorker.register('./service-worker.js');
-                } catch (e) {
-                    console.log(`SW registration failed`);
-                }
-            }
-        }
-
-    </script>
+    <script src="/service-worker.js"></script>
 
 
 
-    <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register("/service-worker.js")
-                    .then(registration => console.log("Service worker registered"))
-                    .catch(error => console.error("Service worker registration failed", error));
-            });
-        }
-    </script>
+
 
 
 
@@ -73,6 +49,20 @@ unset($_SESSION['message']);
 </head>
 
 <body>
+
+<script>
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(function(registration) {
+      console.log('Service Worker registered with scope:', registration.scope);
+    })
+    .catch(function(error) {
+      console.error('Service Worker registration failed:', error);
+    });
+}
+
+</script>
 
 
 

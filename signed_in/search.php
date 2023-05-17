@@ -110,14 +110,12 @@ session_start();
                     <div style="margin-top: -100px;" class="opacity_overlay">
 
                         <div class="container">
-
-                            <form class="form-subscribe" method="get" action="search.php" id="search-bar">
+                            <form class="form-subscribe" action="search.php">
                                 <div class="input-group">
-                                    <input style="color:white;" type="text" class="form-input" placeholder="Search here"
-                                        name="query" required>
+                                    <input style="color:white;" type="text" class="form-input" name="query"
+                                        placeholder="Search here">
                                     <span class="btn-group">
-                                        <a href='search_query.php'><button class="btn" type="submit">Search</button></a>
-                                </div>
+                                        <button class="btn" type="submit">Search</button>
 
                             </form>
 
@@ -201,7 +199,7 @@ session_start();
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
-                align-items: stretch;
+                align-items: center;
             }
         
             .search_item {
@@ -259,7 +257,7 @@ session_start();
                             <a href='" . $item['link'] . "'>" . $item['title'] . "</a>
                         </h3>";
                                 $html .= "<div>" . $item['link'] . "</div>";
-                                $html .= "<p style='color:black;'>" . $item['snippet'] . "</p><br><br>";
+                                $html .= "<p style='color:black;'>" . htmlspecialchars($item['snippet']) . "</p><br><br>";
                                 $html .= "</div>";
                             }
 
