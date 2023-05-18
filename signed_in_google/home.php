@@ -1,3 +1,23 @@
+<?php
+require 'config.php';
+
+if (!isset($_SESSION['login_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
+
+$id = $_SESSION['login_id'];
+
+$get_user = mysqli_query($db_connection, "SELECT * FROM `tblusers` WHERE `google_id`='$id'");
+
+if (mysqli_num_rows($get_user) > 0) {
+    $user = mysqli_fetch_assoc($get_user);
+} else {
+    header('Location: logout.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 

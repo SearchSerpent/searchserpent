@@ -2,67 +2,93 @@
 
 @include 'dbconfig.php';
 
-$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
 
 session_start();
-session_unset();
 
+
+$_SESSION['myEmail'];
+$veremail = $_SESSION['myEmail'];
+
+
+if (!isset($_SESSION['vercodeforgotpassword']) || $_SESSION['verification_code_used']) {
+
+    // Generate a new random verification code between 1000000 and 9999999 (inclusive)
+    $_SESSION['myVercode'] = mt_rand(1000000, 9999999);
+    $vercode =  $_SESSION['myVercode'];
+
+    // Store the new verification code in the session variable
+    $_SESSION['vercodeforgotpassword'] = $vercode;
+
+    // Reset the used flag variable to false
+    $_SESSION['verification_code_used'] = false;
+} else {
+
+    // Retrieve the previously generated verification code from the session variable
+    $vercode = $_SESSION['vercodeforgotpassword'];
+}
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
+//Create an instance; passing `true` enables exceptions
+$mail = new PHPMailer(true);
+
+try {
+    //Server settings
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'leitechcorp@gmail.com';                     //SMTP username
+    $mail->Password   = 'syahozrdvgsvsrgg';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+    //Recipients
+    $mail->setFrom('gadingan.joko.bscs2020@gmail.com', 'Search Serpent');
+    $mail->addAddress($veremail);     //Add a recipient
+
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Verification code to create a new password';
+    $mail->Body    = 'Your verification code is ' . "<b>$vercode</b>";
+
+    $mail->send();
+} catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+}
 
 if (isset($_POST['submit'])) {
 
+    foreach ($_POST as $key => $value) {
+        $_SESSION['info'][$key] = $value;
+    }
+    $keys = array_keys($_SESSION['info']);
 
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
-
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-
-    // Email validation
-    $email_query = "SELECT * FROM tblusers WHERE EmailId = '$email' or username = '$email'";
-    $resultemail = mysqli_query($conn, $email_query);
-
-    // Password validation
-    $password_query = "SELECT * FROM tblusers WHERE EmailId = '$email' AND password = '$pass'";
-    $resultpass = mysqli_query($conn, $password_query);
-
-    if (mysqli_num_rows($resultemail) == 0) {
-        $error1[] = "Email/username not found!";
-    } elseif (mysqli_num_rows($resultpass) == 0) {
-        $error2[] = "Incorrect password!";
-    } else {
+    if (in_array('next', $keys)) {
+        unset($_SESSION['info']['submit']);
     }
 
+    $vercoderegistration = $_POST['vercodeforgotpassword'];
 
-    $select_users = mysqli_query($conn, "SELECT * FROM tblusers WHERE (EmailId = '$email' or username = '$email') && password = '$pass'") or die('query failed');
+    if ($vercoderegistration == $_SESSION['vercodeforgotpassword']) {
 
-
-    if (mysqli_num_rows($select_users) > 0) {
-
-        $row = mysqli_fetch_assoc($select_users);
-
-        if ($row['user_type'] == 'admin') {
-
-            $_SESSION['admin_name'] = $row['name'];
-            $_SESSION['admin_email'] = $row['email'];
-            $_SESSION['admin_id'] = $row['id'];
-            $message[] = 'Incorrect email or password!';
-        } elseif ($row['user_type'] == 'user') {
-
-            $_SESSION['myFirstname'] = $row['FirstName'];
-            $_SESSION['myLastname'] = $row['LastName'];
-            $_SESSION['myVariable'] = $row['EmailId'];
-            $_SESSION['myUsername'] = $row['username'];
-            $_SESSION['user_id'] = $row['id'];
-            header('location:signed_in_google/home.php');
-        }
+        $_SESSION['verification_code_used'] = true;
+        $_SESSION['status'] = "Your account has been verified successfully!";
+        header("Location: create_new_password.php");
     } else {
+        $error[] = 'Incorrect verification code.';
     }
 }
 
 
+// echo $_SESSION['myVariable'];
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -97,8 +123,6 @@ if (isset($_POST['submit'])) {
         })
     </script>
 
-
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
@@ -130,7 +154,7 @@ if (isset($_POST['submit'])) {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.php"></a>
+                    <a class="navbar-brand" href="home.php"></a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -138,10 +162,11 @@ if (isset($_POST['submit'])) {
 
                     <ul class="nav navbar-nav">
                         <li><a href="index.php"><span>Home</span></a></li>
+                        <li><a href="learn.php">Learn</a></li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="contact.php">Contact</a></li>
                         <li><a href="sign_in.php">Sign-in</a></li>
-
+                        <li><a href="sign_up.php">Sign-up</a></li>
                     </ul>
                 </div>
             </div>
@@ -179,6 +204,8 @@ if (isset($_POST['submit'])) {
                 border-radius: 3px;
                 padding: 4px 4px;
                 text-align: center;
+                font-family: montserrat;
+                font-weight: bold;
             }
 
             input.larger {
@@ -188,78 +215,7 @@ if (isset($_POST['submit'])) {
         </style>
 
 
-        <style>
-            .login-with-google-btn {
-
-                transition: background-color 0.3s, box-shadow 0.3s;
-                padding: 12px 16px 12px 42px;
-                border: none;
-                border-radius: 5px;
-                box-shadow: 0 -1px 0 rgb(0 0 0 / 10%), 1px 1px 1px rgb(0 0 0 / 25%);
-                color: black;
-                font-size: 16px;
-                font-family: montserrat;
-                background-color: white;
-                background-repeat: no-repeat;
-                background-position: 12px 11px;
-                text-decoration: none;
-                display: inline-block;
-                width: 500px;
-                max-width: 100;
-                text-align: center;
-                height: 40px;
-                margin-top: -20px;
-                padding-top: 9px;
-
-            }
-
-            .login-with-google-btn:hover {
-
-                text-decoration: none;
-            }
-
-            .login-with-google-btn:active {
-                background-color: white;
-                text-decoration: none;
-            }
-
-            .login-with-google-btn:focus {
-                outline: none;
-                box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25), 0 0 0 3px #c8dafc;
-                text-decoration: none;
-            }
-
-            .login-with-google-btn:disabled {
-                filter: grayscale(100%);
-                background-color: #ebebeb;
-                box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
-                cursor: not-allowed;
-                text-decoration: none;
-            }
-        </style>
-
-
     </header>
-
-    <p style="color: green; text-align:center; margin-top: 20px; margin-bottom: -10px;">
-        <?php
-        if (isset($_GET['msg'])) {
-            $msg = urldecode($_GET['msg']);
-            echo $msg;
-        }
-        ?>
-
-    </p>
-
-    <p style="color: green; text-align:center; margin-top: 20px; margin-bottom: -10px;">
-        <?php
-        if (isset($_GET['msg1'])) {
-            $msg1 = urldecode($_GET['msg1']);
-            echo $msg1;
-        }
-        ?>
-
-    </p>
 
 
     <div class="container">
@@ -274,58 +230,40 @@ if (isset($_POST['submit'])) {
     <div class="contact">
         <div class="container">
             <div class="col-md-8">
+                <?php
+                if (isset($error)) {
+                ?>
+                    <div style="width: 500px;" class="alert alert-danger" role="alert">
+                        <center>
+                            <p> Incorrect verification code.</p>
+                        </center>
+                    </div>
+                <?php
+                    unset($error);
+                }
+
+                ?>
                 <div class="contact-form">
-                    <?php
-                    if (isset($error1)) {
-                    ?>
-                        <div style="width: 500px;" class="alert alert-danger" role="alert">
-                            <center>
-                                <p> Email/username not found.</p>
-                            </center>
-                        </div>
-                    <?php
-                        unset($error1);
-                    }
-
-                    ?>
-                    <?php
-                    if (isset($error2)) {
-                    ?>
-                        <div style="width: 500px;" class="alert alert-danger" role="alert">
-                            <center>
-                                <p> Incorrect password.</p>
-                            </center>
-                        </div>
-                    <?php
-                        unset($error2);
-                    }
-
-                    ?>
-                    <h3><b>Sign-in</b></h3>
+                    <h3><b>Enter the verification code you have received</b></h3>
                     <hr>
                     <form action="#" method="post">
 
-                        <input style="text-transform: none; width: 500px; font-family: montserrat; margin-top: 5px;" type="text" name="email" required value="<?= isset($_SESSION['info']['email']) ? $_SESSION['info']['email'] : '' ?>" placeholder="Email or username">
 
-                        <div>
-                            <input style="width:500px; font-family: montserrat" type="password" id="id_password" name="password" required placeholder="Password">
-                            <i class="far fa-eye" id="togglePassword" style="margin-left: -35px; cursor: pointer;"></i>
-                        </div>
+                        <p style="font-size: 15px; font-family: montserrat;">The verification code has been sent to your email address:
+                        </p><b>
+                            <p style="font-family: montserrat; font-size: 15px;"><?php echo $_SESSION['myEmail']; ?>
+                        </b></p>
 
-                        <a href="forgot_password.php" style="color: #000; font-family: montserrat; line-height: 2">Forgot password?</a></p>
+                        <input style="text-transform: none; font-family: montserrat; width: 500px; margin-bottom: 5px; margin-top: 5px;" name="vercodeforgotpassword" required placeholder="Verification code" type="text" maxlength="7" onkeypress="return /\d/.test(String.fromCharCode(((event||window.event).which||(event||window.event).which)));" value="<?= isset($_SESSION['info']['vercodeforgotpassword']) ? $_SESSION['info']['vercodeforgotpassword'] : '' ?>">
+                        <div class="error1" id="vercodeforgotpasswordErr"></div>
 
 
-                        <!-- Next button -->
-                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 500px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;" type="submit" name="submit" value="Sign-in" class="form-btn">
-                        <br>
-                        <br>
-                        <a type="button" class="login-with-google-btn button1" href="login.php">
-                            Sign-in with Google
-                        </a>
+
+                        <p style="font-size: 14px; font-family: Montserrat;">Didn't receive a verification code? <a href=" vercode_forgot_password.php" style="color:#000;">Resend</a></p>
+
+                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; padding-top: 9px; margin-top:5px;" type="submit" name="submit" id="next" value="Verify" class="form-btn">
+
                     </form>
-
-                    <br>
-                    <p style="font-size: 15px;font-family: Montserrat; margin-top: 7px;">Don't have an account? <a href="sign_up.php" style="color: #000">Sign-up now!</a></p>
                 </div>
             </div>
 

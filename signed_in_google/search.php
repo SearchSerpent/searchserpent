@@ -1,13 +1,71 @@
+<?php
+
+@include 'dbconfig.php';
+
+session_start();
+
+if (isset($_SESSION['info'])) {
+
+    extract($_SESSION['info']);
+
+    $conn = mysqli_connect('localhost', 'root', '', 'ssdb');
+    $name = $firstname . ' ' . $lastname;
+    $user_type = "user";
+    $img = "noprofil.jpg";
+
+
+    $sql = mysqli_query($conn, "INSERT INTO users(name, email, confirmpassword, password, firstname, lastname, username, user_type, vercoderegistration, image) 
+    VALUES('$name','$email','$confirmpassword', '$password', '$firstname', '$lastname', '$username','$user_type', '$vercoderegistration','$img')");
+
+
+    if ($sql) {
+        unset($_SESSION['info']);
+    } else {
+        echo mysqli_error($conn);
+    }
+
+
+
+    $select_users = mysqli_query($conn, "SELECT * FROM users 
+    WHERE (email = '$email' or 
+        username = '$email')") or
+        die('query failed');
+
+
+    if (mysqli_num_rows($select_users) > 0) {
+
+        $row = mysqli_fetch_assoc($select_users);
+
+        if ($row['user_type'] == 'admin') {
+
+            $_SESSION['admin_name'] = $row['name'];
+            $_SESSION['admin_email'] = $row['email'];
+            $_SESSION['admin_id'] = $row['id'];
+            $message[] = 'Incorrect email or password!';
+        } elseif ($row['user_type'] == 'user') {
+
+            $_SESSION['user_name'] = $row['name'];
+            $_SESSION['user_email'] = $row['email'];
+            $_SESSION['user_id'] = $row['id'];
+        }
+    } else {
+    }
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
 
-    <title>Home - SearchSerpent</title>
+    <title>Search results - SearchSerpent</title>
 
     <meta charset="utf-8" />
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/search_style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -78,10 +136,6 @@
         </nav>
 
 
-
-
-
-
         <style>
             .navbar-default {
                 background: #F5F5F5;
@@ -116,115 +170,120 @@
 
             <div class="info">
                 <div class="subscribe">
-                    <div class="opacity_overlay">
+                    <div style="margin-top: -100px;" class="opacity_overlay">
 
                         <div class="container">
-                            <?php
-                            if (isset($_SESSION['status'])) {
-                            ?>
-                                <div style="width: 600px; text-align: center; margin: auto;">
-                                    <center>
-                                        <p> Congratulations! Your account has been created successfully.</p>
-                                    </center>
-                                </div>
-                            <?php
-                                unset($_SESSION['status']);
-                            }
-                            ?>
-                            <img src="images/white-logo.png" height="40px" width="150px">
-                            <p style="font-size: 35px;">Explore the world of computer science with ease</p>
-                            <p>Unlock your coding potential with us</p>
 
-                            <form class="form-subscribe" action="search.php">
+                            <form class="form-subscribe" method="get" action="search.php" id="search-bar">
                                 <div class="input-group">
-                                    <input style="color:white;" type="text" class="form-input" name="query" placeholder="Search here">
+                                    <input style="color:white;" type="text" class="form-input" placeholder="Search here" name="query" required>
                                     <span class="btn-group">
-                                        <button class="btn" type="submit">Search</button>
+                                        <a href='search_query.php'><button class="btn" type="submit">Search</button></a>
                                 </div>
+
+
+
+                                <?php
+                                // Check if the search query is set
+                                if (isset($_GET['query'])) {
+                                    // Get the search query
+                                    $query = $_GET['query'];
+                                    // Define the database connection variables
+                                    $host = 'localhost';
+                                    $username = 'root';
+                                    $password = '';
+                                    $database = 'ssdb';
+                                    // Create a PDO database connection
+                                    $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+                                    // Set the number of results to display per page
+                                    $results_per_page = 10;
+                                    // Get the current page number
+                                    if (isset($_GET['page'])) {
+                                        $page = $_GET['page'];
+                                    } else {
+                                        $page = 1;
+                                    }
+                                    // Calculate the starting result for the current page
+                                    $start_from = ($page - 1) * $results_per_page;
+                                    // Prepare the SQL statement to search for the query in the database
+                                    // Prepare the SQL statement to search for the query in the title and keywords columns and order the results by relevance
+                                    $stmt = $pdo->prepare("SELECT * FROM `pages` 
+WHERE MATCH (`title`, `keywords`) AGAINST (:query) 
+ORDER BY MATCH (`title`, `keywords`) AGAINST (:query) DESC 
+LIMIT $start_from, $results_per_page");
+                                    $stmt->bindValue(':query', $query);
+
+
+                                    // Execute the SQL statement
+                                    $stmt->execute();
+                                    // Fetch the results
+                                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    // Get the total number of results for the query
+                                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM `pages` 
+    WHERE `title` LIKE :query OR 
+    `description` LIKE :query OR 
+    `url` LIKE :query");
+                                    $stmt->bindValue(':query', '%' . $query . '%');
+                                    $stmt->execute();
+                                    $total_results = $stmt->fetchColumn();
+                                    // Calculate the total number of pages
+                                    $total_pages = ceil($total_results / $results_per_page);
+                                    // Display the results
+
+                                    foreach ($results as $result) {
+                                ?>
+
+                                        <div class="search_list">
+
+                                            <?php
+
+                                            echo '<h3 style="text-transform:none; "><a href="' . $result['url'] . '" target="_blank"> <b>' . $result['title'] . '</b></a></h3>';
+                                            echo '<p style="color:green; font-size: 11px;">' . $result['url'] . '</p> <br>';
+                                            echo $result['description'] . '<br><br>';
+
+                                            ?>
+
+                                        </div>
+
+                                    <?php
+                                    }
+
+                                    ?>
+
+                                    <div class="paging">
+                                        <?php
+                                        // Display the pagination links
+                                        for ($i = 1; $i <= $total_pages; $i++) {
+
+                                            echo '<a href="search.php?query=' . $query . '&page=' . $i . '">' . $i . '</a>';
+                                        }
+
+
+                                        ?>
+                                    </div>
+                                <?php
+                                } else {
+                                ?>
+                                    <p>Sorry, we are unable to find what you're looking for. Try to search on something. </p>
+
+                                <?php
+                                }
+                                ?>
+                            </form>
+
                         </div>
-                        </form>
                     </div>
                 </div>
-            </div>
 
-            <div class="secondary_layer">
-
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="services">
-        <div class="container">
-            <h2>SearchSerpent is a <span id="rotate"></span> educational web search engine</h2>
-            <h3>It is designed to help students find reliable and relevant information on a
-                wide range of computer science topics.</h3>
-
-            <div class="overview">
-
-                <div class="col-md-4 col-sm-4">
-                    <div class="feature-box">
-                        <img src="images/image1.png" class="img-responsive">
-                    </div>
-
-                    <div class="feature-body">
-                        <h4>Responsive</h4>
-                        <p>It is designed to be accessible and easy to use on desktop, tablet, and mobile devices by
-                            being optimized for various devices and screen sizes.</p>
-                    </div>
-
-                </div>
-
-                <div class="col-md-4 col-sm-4">
-                    <div class="feature-box">
-                        <img src="images/image2.png" class="img-responsive">
-                    </div>
-
-                    <div class="feature-body">
-                        <h4>Reliable</h4>
-                        <p>We use algorithms and filters to ensure that the most relevant and trustworthy information is
-                            presented to the user.</p>
-                    </div>
-
-                </div>
-
-                <div class="col-md-4 col-sm-4">
-                    <div class="feature-box">
-                        <img src="images/image3.png" class="img-responsive">
-                    </div>
-
-                    <div class="feature-body">
-                        <h4>Relevant</h4>
-                        <p> We provide quick and easy access to vast amounts of information on computer science topics.
-                        </p>
-                    </div>
+                <div class="secondary_layer">
 
                 </div>
 
             </div>
         </div>
-    </div>
 
 
-    < <div class="more-information">
-        <div class="container">
-            <div class="col-md-6">
-                <div class="sides">
-                    <h4>Why Choose Us</h4>
-                    <hr>
-                    <p>SearchSerpent is a search engine designed specifically for computer science students. We understand that the field of computer science can be vast and complex, and finding reliable and relevant information can be a daunting task. Our search engine is built to help you navigate this complexity and find the information you need quickly and efficiently. </p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="sides">
-                    <h4>What We Will Do</h4>
-                    <hr>
-                    <p>Our team has worked tirelessly to build a database of high-quality resources that are specifically tailored to computer science students' needs. We believe that every student should have access to the best resources available to help them succeed academically, which is why we are dedicated to providing a search engine that is dependable, relevant, and responsive.</p>
-                </div>
-            </div>
-        </div>
-        </div>
+
 
         <footer class="footer">
             <div class="container">

@@ -1,16 +1,21 @@
 <?php
+require 'config.php';
 
-@include 'dbconfig.php';
+if (!isset($_SESSION['login_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
 
-$conn = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud');
+$id = $_SESSION['login_id'];
 
-session_start();
+$get_user = mysqli_query($db_connection, "SELECT * FROM `tblusers` WHERE `google_id`='$id'");
 
-$_SESSION['myVariable'];
-
-$sessionemail = $_SESSION['myVariable'];
-$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE EmailId = '$sessionemail'"));
-
+if (mysqli_num_rows($get_user) > 0) {
+    $user = mysqli_fetch_assoc($get_user);
+} else {
+    header('Location: logout.php');
+    exit;
+}
 ?>
 
 
@@ -42,7 +47,11 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
 
-
+    <script type="text/javascript">
+        $(window).load(function() {
+            $(".loader").fadeOut("slow");
+        })
+    </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -50,7 +59,19 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
 
 <body>
 
+    <div class="loader"></div>
 
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        }
+    </style>
 
     <header>
 
@@ -118,6 +139,20 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
                 width: 10px;
                 height: 10px;
             }
+
+            ._img {
+                overflow: hidden;
+                width: 100px;
+                height: 100px;
+                margin: 0 auto;
+                border-radius: 50%;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
+
+            ._img>img {
+                width: 100px;
+                min-height: 100px;
+            }
         </style>
 
 
@@ -134,23 +169,12 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
     <center>
         <p style="font-size: 25px; font-family: montserrat;"><b>Profile Information</b></p>
     </center>
-    <div style="border-style: solid; border-color: gray; width: 500px; max-width: 100%; margin:auto">
+    <div style="border-style: solid; border-color: gray; width: 500px; margin:auto">
 
         <br>
         <form class="form" id="form" action="" enctype="multipart/form-data" method="post">
             <div class="upload">
-                <?php
-                $id = $user["id"];
-                $name = $user["name"];
-                $image = $user["Photo"];
-                ?>
-                <img src="../searchserpent-admin/upload/<?php echo $image; ?>" width=125 height=125 title="<?php echo $image; ?>">
-                <div class="round">
-                    <input type="hidden" name="id" value="<?php echo $id; ?>">
-                    <input type="hidden" name="name" value="<?php echo $name; ?>">
-                    <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png">
-                    <i class="fa fa-camera" style="color: #fff; background-color: black;"></i>
-                </div>
+                <img src="<?php echo $user['Photo']; ?>" alt="<?php echo $user['name']; ?>">
             </div>
         </form>
 
@@ -160,22 +184,15 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
             <div style=" text-align: center;">
                 <br>
                 <b>
-                    <p style="font-family: montserrat; font-size: 20px; text-transform:capitalize ">
-                        <?php echo $_SESSION['myFirstname']; ?>
-                        <?php echo $_SESSION['myLastname']; ?>
+                    <p style="font-family: montserrat; font-size: 20px; text-transform:capitalize "><?php echo $user['name']; ?>
                     </p>
                 </b>
 
-                <p style="font-family: montserrat; font-size: 15px; text-transform:capitalize "><b>Username:</b>
-                    <?php echo $_SESSION['myUsername']; ?>
+                <p style="font-family: montserrat; font-size: 15px; text-transform:none "><b>Username:</b> <?php echo $user['username']; ?>
                 </p>
 
-                <p style="font-family: montserrat; font-size: 15px;"><b>Email:</b>
-                    <?php echo $_SESSION['myVariable']; ?>
+                <p style="font-family: montserrat; font-size: 15px;"><b>Email:</b> <?php echo $user['EmailId']; ?>
                 </p>
-
-
-
             </div>
         </div>
 
@@ -329,7 +346,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
             $newImageName .= '.' . $imageExtension;
             $query = "UPDATE tblusers SET Photo = '$newImageName' WHERE id = $id";
             mysqli_query($conn, $query);
-            move_uploaded_file($tmpName, '../admin/upload/' . $newImageName);
+            move_uploaded_file($tmpName, '../searchserpent-admin/upload/' . $newImageName);
             echo
             "
         <script>
