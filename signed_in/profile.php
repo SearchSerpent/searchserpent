@@ -1,21 +1,16 @@
 <?php
-require 'config.php';
 
-if (!isset($_SESSION['login_id'])) {
-    header('Location: ../login.php');
-    exit;
-}
+@include 'dbconfig.php';
 
-$id = $_SESSION['login_id'];
+$conn = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud');
 
-$get_user = mysqli_query($db_connection, "SELECT * FROM `tblusers` WHERE `google_id`='$id'");
+session_start();
 
-if (mysqli_num_rows($get_user) > 0) {
-    $user = mysqli_fetch_assoc($get_user);
-} else {
-    header('Location: logout.php');
-    exit;
-}
+$_SESSION['myVariable'];
+
+$sessionemail = $_SESSION['myVariable'];
+$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE EmailId = '$sessionemail'"));
+
 ?>
 
 
@@ -47,11 +42,7 @@ if (mysqli_num_rows($get_user) > 0) {
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
 
-    <script type="text/javascript">
-        $(window).load(function () {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -59,27 +50,14 @@ if (mysqli_num_rows($get_user) > 0) {
 
 <body>
 
-    <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
 
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -89,8 +67,7 @@ if (mysqli_num_rows($get_user) > 0) {
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
-                    id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="home.php"><span>Home</span></a></li>
@@ -141,20 +118,6 @@ if (mysqli_num_rows($get_user) > 0) {
                 width: 10px;
                 height: 10px;
             }
-
-            ._img {
-                overflow: hidden;
-                width: 100px;
-                height: 100px;
-                margin: 0 auto;
-                border-radius: 50%;
-                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            }
-
-            ._img>img {
-                width: 100px;
-                min-height: 100px;
-            }
         </style>
 
 
@@ -176,7 +139,18 @@ if (mysqli_num_rows($get_user) > 0) {
         <br>
         <form class="form" id="form" action="" enctype="multipart/form-data" method="post">
             <div class="upload">
-                <img src="<?php echo $user['Photo']; ?>" alt="<?php echo $user['name']; ?>">
+                <?php
+                $id = $user["id"];
+                $name = $user["name"];
+                $image = $user["Photo"];
+                ?>
+                <img src="../searchserpent-admin/upload/<?php echo $image; ?>" width=125 height=125 title="<?php echo $image; ?>">
+                <div class="round">
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    <input type="hidden" name="name" value="<?php echo $name; ?>">
+                    <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png">
+                    <i class="fa fa-camera" style="color: #fff; background-color: black;"></i>
+                </div>
             </div>
         </form>
 
@@ -187,17 +161,21 @@ if (mysqli_num_rows($get_user) > 0) {
                 <br>
                 <b>
                     <p style="font-family: montserrat; font-size: 20px; text-transform:capitalize ">
-                        <?php echo $user['name']; ?>
+                        <?php echo $_SESSION['myFirstname']; ?>
+                        <?php echo $_SESSION['myLastname']; ?>
                     </p>
                 </b>
 
-                <p style="font-family: montserrat; font-size: 15px; text-transform:none "><b>Username:</b>
-                    <?php echo $user['username']; ?>
+                <p style="font-family: montserrat; font-size: 15px; text-transform:capitalize "><b>Username:</b>
+                    <?php echo $_SESSION['myUsername']; ?>
                 </p>
 
                 <p style="font-family: montserrat; font-size: 15px;"><b>Email:</b>
-                    <?php echo $user['EmailId']; ?>
+                    <?php echo $_SESSION['myVariable']; ?>
                 </p>
+
+
+
             </div>
         </div>
 
@@ -273,7 +251,7 @@ if (mysqli_num_rows($get_user) > 0) {
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.toggle-menu').jPushMenu({
                 closeOnClickLink: false
             });
@@ -283,7 +261,7 @@ if (mysqli_num_rows($get_user) > 0) {
 
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $.scrollUp({
                 scrollName: 'scrollUp', // Element ID
                 topDistance: '300', // Distance from top before showing element (px)
@@ -301,7 +279,7 @@ if (mysqli_num_rows($get_user) > 0) {
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#id_password');
 
-        togglePassword.addEventListener('click', function (e) {
+        togglePassword.addEventListener('click', function(e) {
             // toggle the type attribute
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
@@ -313,7 +291,7 @@ if (mysqli_num_rows($get_user) > 0) {
 
 
     <script type="text/javascript">
-        document.getElementById("image").onchange = function () {
+        document.getElementById("image").onchange = function() {
             document.getElementById("form").submit();
         };
     </script>
@@ -332,7 +310,7 @@ if (mysqli_num_rows($get_user) > 0) {
         $imageExtension = strtolower(end($imageExtension));
         if (!in_array($imageExtension, $validImageExtension)) {
             echo
-                "
+            "
         <script>
           alert('Invalid image extension');
           document.location.href = 'profile.php';
@@ -340,7 +318,7 @@ if (mysqli_num_rows($get_user) > 0) {
         ";
         } elseif ($imageSize > 1200000) {
             echo
-                "
+            "
         <script>
           alert('Image size is too large');
           document.location.href = 'profile.php';
@@ -351,9 +329,9 @@ if (mysqli_num_rows($get_user) > 0) {
             $newImageName .= '.' . $imageExtension;
             $query = "UPDATE tblusers SET Photo = '$newImageName' WHERE id = $id";
             mysqli_query($conn, $query);
-            move_uploaded_file($tmpName, '../searchserpent-admin/upload/' . $newImageName);
+            move_uploaded_file($tmpName, '../admin/upload/' . $newImageName);
             echo
-                "
+            "
         <script>
         document.location.href = 'profile.php';
         </script>

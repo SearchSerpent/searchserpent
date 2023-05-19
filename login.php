@@ -2,7 +2,7 @@
 require 'config.php';
 
 if (isset($_SESSION['login_id'])) {
-    header('Location: signed_in/signed_in_home.php');
+    header('Location: signed_in_google/home.php');
     exit;
 }
 
@@ -16,7 +16,7 @@ $client->setClientId('692907008570-pf8btieioflisqpocse63jq8dlfu1kdm.apps.googleu
 // Enter your Client Secrect
 $client->setClientSecret('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');
 // Enter the Redirect URL
-$client->setRedirectUri('http://localhost/searchserpent-new/login.php');
+$client->setRedirectUri('https://serchserpent.infinityfreeapp.com/login.php');
 
 // Adding those scopes which we want to get (email & profile Information)
 $client->addScope("email");
@@ -49,7 +49,7 @@ if (isset($_GET['code'])) :
         if (mysqli_num_rows($get_user) > 0) {
 
             $_SESSION['login_id'] = $id;
-            header('Location: signed_in/signed_in_home.php');
+            header('Location: signed_in_google/home.php');
             exit;
         } else {
 
@@ -58,7 +58,7 @@ if (isset($_GET['code'])) :
 
             if ($insert) {
                 $_SESSION['login_id'] = $id;
-                header('Location: signed_in/signed_in_home.php');
+                header('Location: signed_in_google/home.php');
                 exit;
             } else {
                 echo "Sign up failed!(Something went wrong).";

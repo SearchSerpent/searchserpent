@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['myVariable'] = $row['EmailId'];
             $_SESSION['myUsername'] = $row['username'];
             $_SESSION['user_id'] = $row['id'];
-            header('location:signed_in/signed_in_home.php');
+            header('location:signed_in_google/home.php');
         }
     } else {
     }
@@ -92,7 +92,7 @@ if (isset($_POST['submit'])) {
     <script src="js/jquery.scrollUp.min.js"></script>
 
     <script type="text/javascript">
-        $(window).load(function () {
+        $(window).load(function() {
             $(".loader").fadeOut("slow");
         })
     </script>
@@ -124,8 +124,7 @@ if (isset($_POST['submit'])) {
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -135,8 +134,7 @@ if (isset($_POST['submit'])) {
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
-                    id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav">
                         <li><a href="index.php"><span>Home</span></a></li>
@@ -192,7 +190,7 @@ if (isset($_POST['submit'])) {
 
         <style>
             .login-with-google-btn {
-                width: 50%;
+
                 transition: background-color 0.3s, box-shadow 0.3s;
                 padding: 12px 16px 12px 42px;
                 border: none;
@@ -207,6 +205,7 @@ if (isset($_POST['submit'])) {
                 text-decoration: none;
                 display: inline-block;
                 width: 500px;
+                max-width: 100;
                 text-align: center;
                 height: 40px;
                 margin-top: -20px;
@@ -278,26 +277,26 @@ if (isset($_POST['submit'])) {
                 <div class="contact-form">
                     <?php
                     if (isset($error1)) {
-                        ?>
+                    ?>
                         <div style="width: 500px;" class="alert alert-danger" role="alert">
                             <center>
                                 <p> Email/username not found.</p>
                             </center>
                         </div>
-                        <?php
+                    <?php
                         unset($error1);
                     }
 
                     ?>
                     <?php
                     if (isset($error2)) {
-                        ?>
+                    ?>
                         <div style="width: 500px;" class="alert alert-danger" role="alert">
                             <center>
                                 <p> Incorrect password.</p>
                             </center>
                         </div>
-                        <?php
+                    <?php
                         unset($error2);
                     }
 
@@ -306,35 +305,27 @@ if (isset($_POST['submit'])) {
                     <hr>
                     <form action="#" method="post">
 
-                        <input style="text-transform: none; width: 500px; font-family: montserrat; margin-top: 5px;"
-                            type="text" name="email" required
-                            value="<?= isset($_SESSION['info']['email']) ? $_SESSION['info']['email'] : '' ?>"
-                            placeholder="Email or username">
+                        <input style="text-transform: none; width: 500px; font-family: montserrat; margin-top: 5px;" type="text" name="email" required value="<?= isset($_SESSION['info']['email']) ? $_SESSION['info']['email'] : '' ?>" placeholder="Email or username">
 
                         <div>
-                            <input style="width:500px; font-family: montserrat" type="password" id="id_password"
-                                name="password" required placeholder="Password">
+                            <input style="width:500px; font-family: montserrat" type="password" id="id_password" name="password" required placeholder="Password">
                             <i class="far fa-eye" id="togglePassword" style="margin-left: -35px; cursor: pointer;"></i>
                         </div>
 
-                        <a href="forgot_password.php"
-                            style="color: #000; font-family: montserrat; line-height: 2">Forgot password?</a></p>
+                        <a href="forgot_password.php" style="color: #000; font-family: montserrat; line-height: 2">Forgot password?</a></p>
 
 
                         <!-- Next button -->
-                        <input
-                            style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 500px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;"
-                            type="submit" name="submit" value="Sign-in" class="form-btn">
+                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 500px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;" type="submit" name="submit" value="Sign-in" class="form-btn">
                         <br>
                         <br>
                         <a type="button" class="login-with-google-btn button1" href="login.php">
-                            Sign in with Google
+                            Sign-in with Google
                         </a>
                     </form>
 
                     <br>
-                    <p style="font-size: 15px;font-family: Montserrat; margin-top: 7px;">Don't have an account? <a
-                            href="sign_up.php" style="color: #000">Sign-up now!</a></p>
+                    <p style="font-size: 15px;font-family: Montserrat; margin-top: 7px;">Don't have an account? <a href="sign_up.php" style="color: #000">Sign-up now!</a></p>
                 </div>
             </div>
 
@@ -343,9 +334,7 @@ if (isset($_POST['submit'])) {
 
                     <h3><b>Our Mission</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine
-                        application that provides computer science students with accurate and relevant search results.
-                    </p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine application that provides computer science students with accurate and relevant search results.</p>
 
                 </div>
             </div>
@@ -353,11 +342,7 @@ if (isset($_POST['submit'])) {
                 <div class="contact-info">
                     <h3><b>Our Vision</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that
-                        provides computer science students with easy access to high-quality educational resources.
-                        Through advanced search filters, the application will help students find the resources they need
-                        quickly and efficiently. Ultimately, we aim to support students in their learning journey and
-                        help them achieve academic success.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To create a user-friendly platform that provides computer science students with easy access to high-quality educational resources. Through advanced search filters, the application will help students find the resources they need quickly and efficiently. Ultimately, we aim to support students in their learning journey and help them achieve academic success.</p>
 
                 </div>
             </div>
@@ -410,7 +395,7 @@ if (isset($_POST['submit'])) {
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.toggle-menu').jPushMenu({
                 closeOnClickLink: false
             });
@@ -420,7 +405,7 @@ if (isset($_POST['submit'])) {
 
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $.scrollUp({
                 scrollName: 'scrollUp', // Element ID
                 topDistance: '300', // Distance from top before showing element (px)
@@ -438,7 +423,7 @@ if (isset($_POST['submit'])) {
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#id_password');
 
-        togglePassword.addEventListener('click', function (e) {
+        togglePassword.addEventListener('click', function(e) {
             // toggle the type attribute
             const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
             password.setAttribute('type', type);
