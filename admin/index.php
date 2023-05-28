@@ -68,13 +68,13 @@ try {
   </style>
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-color:#1a1a1a;">
   <div class="login-box">
     <!-- /.login-logo -->
     <div style="border: none;" class="card card-outline card-primary">
       <div class="card-header text-center">
-        <img src="images/logo.png" height="30px" width="120px">
-        <h2>Sign In as Administrator</h2>
+        <img src="images/logo.png" height="35px" width="120px">
+        
       </div>
       <div class="card-body">
         <center>
@@ -86,15 +86,18 @@ try {
             ?>
           </font>
         </center>
-        <br>
+
+        <center><h4>Sign-In as Administrator</h4></center>
         <form method="POST">
+        
           <div>
-            <input style="width: 320px;" type="text" required name="username" placeholder="Username">
+
+            <input style="width: 320px; max-width:100%; margin-top: 10px;" type="text" required name="username" placeholder="Username">
             <br>
             <p></p>
           </div>
           <div>
-            <div><input style="width: 320px;" type="password" required name="password" id="id_password"
+            <div><input style="width: 320px; max-width:100%;" type="password" required name="password" id="id_password"
                 placeholder="Password"><i style="margin-left: -30px;" class="far fa-eye" id="togglePassword"></i></div>
             <br>
 
@@ -103,8 +106,9 @@ try {
 
             <!-- /.col -->
             <div class="col-4">
-              <button style="background-color: black; border: none;" type="submit" name="login"
-                class="btn btn-primary btn-block">Sign In</button>
+              <button style="background-color: black; border: none; width:320px; max-width: 350%; margin-bottom: 10px;" type="submit" name="login"
+                class="btn btn-primary btn-block">Sign-In</button>
+                <a href="../sign_in.php" style="color: black;"><< Back</a>
             </div>
             <!-- /.col -->
           </div>

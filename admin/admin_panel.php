@@ -134,7 +134,6 @@
             <thead>
 
               <th style="font-family: montserrat; font-size: 14px;">ID No. </th>
-              <th style="font-family: montserrat; font-size: 14px;">Photo</th>
               <th style="font-family: montserrat; font-size: 14px;">Name</th>
               <th style="font-family: montserrat; font-size: 14px;">Username</th>
               <th style="font-family: montserrat; font-size: 14px;">Email </th>
@@ -165,9 +164,7 @@
                     <td>
                       <?php echo htmlentities($result->id); ?>
                     </td>
-                    <td><img
-                        src="<?php echo htmlentities(!empty($result->Photo)) ? 'upload/' . htmlentities($result->Photo) : 'upload/Default.jpg'; ?>"
-                        class="img-circle" width="50" height="50"></td>
+                   
                     <td style="text-transform: capitalize;">
                       <?php echo htmlentities($result->FirstName . ' ' . $result->LastName); ?>
                     </td>
@@ -183,7 +180,7 @@
                         href="update.php?id=<?php echo htmlentities($result->id); ?>" class="btn btn-primary btn-sm"><span
                           class="fas fa-edit"></span></a>
                       <a style="color: white; background-color: #DF2E38; border: none;"
-                        href="dashboard.php?delete=<?php echo htmlentities($result->id); ?>"
+                        href="admin_panel.php?delete=<?php echo htmlentities($result->id); ?>"
                         onclick="return confirm('delete this user?');" class="btn btn-danger btn-sm"><span
                           class="fas fa-trash"></span></a>
                     </td>

@@ -6,7 +6,7 @@ define('DB_NAME', 'epiz_34189122_pdocrud');
 
 
 try {
-    $dbh = new PDO("mysql:host=" . DB_HOST . "; dbname=" . DB_NAME, DB_USER, DB_PASS);
+    $conn = new PDO("mysql:host=" . DB_HOST . "; dbname=" . DB_NAME, DB_USER, DB_PASS);
 } catch (PDOException $e) {
     exit("Error" . $e->getMessage());
 }

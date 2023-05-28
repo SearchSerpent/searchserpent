@@ -131,6 +131,8 @@ if (isset($_POST['submit'])) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
 
 

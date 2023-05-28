@@ -1,11 +1,10 @@
 <?php
 
-@include 'dbconfig.php';
+$conn = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud');
 
-$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
-
-session_start();
 session_unset();
+session_start();
+
 
 
 if (isset($_POST['submit'])) {
@@ -52,7 +51,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['myVariable'] = $row['EmailId'];
             $_SESSION['myUsername'] = $row['username'];
             $_SESSION['user_id'] = $row['id'];
-            header('location:signed_in_google/home.php');
+            header('location:signed_in/home.php');
         }
     } else {
     }
@@ -73,6 +72,9 @@ if (isset($_POST['submit'])) {
 
     <meta charset="utf-8" />
 
+    <script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/sidebar.css">
@@ -90,6 +92,8 @@ if (isset($_POST['submit'])) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
     <script type="text/javascript">
         $(window).load(function() {
@@ -107,17 +111,7 @@ if (isset($_POST['submit'])) {
 
     <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
+
 
     <header>
 
@@ -205,7 +199,7 @@ if (isset($_POST['submit'])) {
                 text-decoration: none;
                 display: inline-block;
                 width: 500px;
-                max-width: 100;
+                max-width: 100%;
                 text-align: center;
                 height: 40px;
                 margin-top: -20px;
@@ -319,13 +313,17 @@ if (isset($_POST['submit'])) {
                         <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 500px; height: 40px; margin-top: -2px ;padding-top: 9px; font-family: Montserrat;" type="submit" name="submit" value="Sign-in" class="form-btn">
                         <br>
                         <br>
+
+                        
                         <a type="button" class="login-with-google-btn button1" href="login.php">
                             Sign-in with Google
                         </a>
+                     
                     </form>
 
                     <br>
                     <p style="font-size: 15px;font-family: Montserrat; margin-top: 7px;">Don't have an account? <a href="sign_up.php" style="color: #000">Sign-up now!</a></p>
+                    <p style="font-size: 15px;font-family: Montserrat; margin-top: 7px;"><a href="https://serchserpent.infinityfreeapp.com/admin/" style="color: #000">Sign-in as Admin</a></p>
                 </div>
             </div>
 
@@ -334,7 +332,7 @@ if (isset($_POST['submit'])) {
 
                     <h3><b>Our Mission</b></h3>
                     <hr>
-                    <p style="font-size: 15px; font-family: Montserrat;">To develop an education web search engine application that provides computer science students with accurate and relevant search results.</p>
+                    <p style="font-size: 15px; font-family: Montserrat;">To develop an educational web search engine application that provides computer science students with accurate and relevant search results.</p>
 
                 </div>
             </div>

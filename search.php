@@ -4,11 +4,7 @@
 
 session_start();
 
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html>
@@ -18,6 +14,9 @@ session_start();
     <title>Search results - SearchSerpent</title>
 
     <meta charset="utf-8" />
+
+    <script src="/service-worker.js"></script>
+    <link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
     <link rel="stylesheet" type="text/css" href="css/search_style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -162,9 +161,9 @@ session_start();
                             $last_page = min($total_pages, $current_page + 3);
 
                             foreach ($results['items'] as $item) {
-                                $html .= "<div class='search_item'>";
+                                $html .= "<div class='search_item' style='padding: 35px; 35px; 35px; 35px;'>";
                                 $html .= "<h3 style='font-size:22px; text-transform:none;'>
-                            <a href='" . $item['link'] . "'>" . $item['title'] . "</a>
+                            <a href='" . $item['link'] . "' target='_blank'>" . $item['title'] . "</a>
                         </h3>";
                                 $html .= "<div>" . $item['link'] . "</div>";
                                 $html .= "<p style='color:black;'>" . htmlspecialchars($item['snippet']) . "</p><br><br>";

@@ -66,6 +66,8 @@ if (isset($_POST['next'])) {
 
     <!-- custom captcha  -->
     <link rel="stylesheet" href="style_captcha.css" />
+    <script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
     <!--eye icon-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
@@ -84,6 +86,8 @@ if (isset($_POST['next'])) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="/service-worker.js"></script>
+    <link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
 
 
@@ -352,7 +356,7 @@ if (isset($_POST['next'])) {
                         <br>
                         <!-- Terms and conditions -->
                         <p style=" font-size:13px; font-family: montserrat;">Before clicking <b>Sign-up,</b> you must
-                            read and answer the captcha in the <b> <!-- Button trigger modal -->
+                            <b>read and answer the captcha</b> in the <b> <!-- Button trigger modal -->
                                 <a style="cursor: pointer; color:#000" data-toggle="modal"
                                     data-target="#exampleModalLong">
                                     Terms and Conditions
@@ -547,7 +551,7 @@ if (isset($_POST['next'])) {
                                         <input style="width:500px; font-family: Montserrat; margin-top: 2px;"
                                             type="text" id="userInput"
                                             placeholder="Enter the text from the image above" />
-                                        <div class="error1" id="userInputErr"></div>
+                                        <b><div class="error1" id="userInputErr"></div></b>
                                         <br>
                                         <!-- Next button -->
                                         <input

@@ -32,7 +32,7 @@ if (isset($_POST['next'])) {
 
     if ($newpass == $newcpass) {
 
-        $msg1 = 'Your password has been changed successfully! You can now sign-in.';
+        $msg1 = 'Your password has been changed successfully! You can now sign in.';
         header('Location: sign_in.php?msg1=' . urlencode($msg1));
     } else {
         $error[] = 'Password did not match!';
@@ -66,6 +66,9 @@ if (isset($_POST['next'])) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+
+    <script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
     <script type="text/javascript">
         function preback() {
