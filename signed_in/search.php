@@ -34,6 +34,9 @@ session_start();
     <script src="js/jPushMenu.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
 
 
@@ -252,9 +255,9 @@ session_start();
                             $last_page = min($total_pages, $current_page + 3);
 
                             foreach ($results['items'] as $item) {
-                                $html .= "<div class='search_item'>";
+                                $html .= "<div class='search_item' style='padding: 35px; 35px; 35px; 35px;'>";
                                 $html .= "<h3 style='font-size:22px; text-transform:none;'>
-                            <a href='" . $item['link'] . "'>" . $item['title'] . "</a>
+                            <a href='" . $item['link'] . "' target='_blank'>" . $item['title'] . "</a>
                         </h3>";
                                 $html .= "<div>" . $item['link'] . "</div>";
                                 $html .= "<p style='color:black;'>" . htmlspecialchars($item['snippet']) . "</p><br><br>";

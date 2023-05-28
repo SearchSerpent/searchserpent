@@ -1,6 +1,6 @@
 <?php
 
-include 'dbconfig.php';
+$conn = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud') or die('connection failed');
 
 session_start();
 
@@ -12,7 +12,7 @@ if (!isset($user_id)) {
 
 if (isset($_POST['send'])) {
 
-    $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('connection failed');
+    $conn = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud') or die('connection failed');
 
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -52,6 +52,9 @@ if (isset($_POST['send'])) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -184,13 +187,13 @@ if (isset($_POST['send'])) {
                     <h3><b>Contact Form</b></h3>
                     <hr>
                     <form action="#" method="post">
-                        <input style="width: 500px; font-family:montserrat; text-transform:capitalize;" type="text"
+                        <input style="width: 500px; max-width: 100%; font-family:montserrat; text-transform:capitalize;" type="text"
                             name="name"
                             value="<?php echo $_SESSION['myFirstname']; ?> <?php echo $_SESSION['myLastname']; ?>"
                             required placeholder="Name" class="box" onkeydown="return /[a-z, ]/i.test(event.key)"
                             id="firstname" name="firstname">
 
-                        <input style="width: 500px; font-family:montserrat; text-transform: none" type="email"
+                        <input style="width: 500px; max-width: 100%; font-family:montserrat; text-transform: none" type="email"
                             name="email" value="<?php echo $_SESSION['myVariable']; ?>" required placeholder="Email"
                             class="box">
 

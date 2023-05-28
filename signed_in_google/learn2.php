@@ -20,12 +20,11 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="signed/manifest.json">
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -33,7 +32,7 @@
 
 <body>
 
-    <div class="loader"></div>
+
 
     <style>
         .loader {

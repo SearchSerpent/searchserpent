@@ -22,11 +22,11 @@
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="signed/manifest.json">
+
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -34,19 +34,8 @@
 
 <body>
 
-    <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
+   
 
     <header>
 
@@ -114,7 +103,7 @@
         <div class="container">
             <div class="col-md-6">
                 <div class="image">
-                    <img src="images/about-us1.jpg" class="img-responsive">
+                    <img src="images/about-us.jpg" class="img-responsive">
                 </div>
             </div>
             <div class="col-md-6">

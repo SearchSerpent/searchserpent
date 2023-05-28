@@ -1,60 +1,10 @@
 <?php
 
-@include 'dbconfig.php';
+include 'dbconfig.php';
 
 session_start();
 
-if (isset($_SESSION['info'])) {
-
-    extract($_SESSION['info']);
-
-    $conn = mysqli_connect('localhost', 'root', '', 'ssdb');
-    $name = $firstname . ' ' . $lastname;
-    $user_type = "user";
-    $img = "noprofil.jpg";
-
-
-    $sql = mysqli_query($conn, "INSERT INTO users(name, email, confirmpassword, password, firstname, lastname, username, user_type, vercoderegistration, image) 
-    VALUES('$name','$email','$confirmpassword', '$password', '$firstname', '$lastname', '$username','$user_type', '$vercoderegistration','$img')");
-
-
-    if ($sql) {
-        unset($_SESSION['info']);
-    } else {
-        echo mysqli_error($conn);
-    }
-
-
-
-    $select_users = mysqli_query($conn, "SELECT * FROM users 
-    WHERE (email = '$email' or 
-        username = '$email')") or
-        die('query failed');
-
-
-    if (mysqli_num_rows($select_users) > 0) {
-
-        $row = mysqli_fetch_assoc($select_users);
-
-        if ($row['user_type'] == 'admin') {
-
-            $_SESSION['admin_name'] = $row['name'];
-            $_SESSION['admin_email'] = $row['email'];
-            $_SESSION['admin_id'] = $row['id'];
-            $message[] = 'Incorrect email or password!';
-        } elseif ($row['user_type'] == 'user') {
-
-            $_SESSION['user_name'] = $row['name'];
-            $_SESSION['user_email'] = $row['email'];
-            $_SESSION['user_id'] = $row['id'];
-        }
-    } else {
-    }
-}
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html>
@@ -80,12 +30,9 @@ if (isset($_SESSION['info'])) {
     <script src="js/jPushMenu.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
-
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="signed/manifest.json">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -93,48 +40,35 @@ if (isset($_SESSION['info'])) {
 
 <body>
 
-    <div class="loader"></div>
-
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
 
         <nav class="navbar-default navbar-static-top" id="navbar-default" style="border-radius:0;">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle toggle-menu menu-left push-body" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="home.php"></a>
+                    <a class="navbar-brand" href="index.php"></a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
-
+                <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left"
+                    id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="home.php"><span>Home</span></a></li>
-                        <li><a href="learn.php">Learn</a></li>
+                        <li><a href="index.php"><span>Home</span></a></li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="contact.php">Contact</a></li>
-                        <li><a href="profile.php">Profile</a></li>
+                        <li><a href="sign_in.php">Sign-in</a></li>
+
                     </ul>
                 </div>
             </div>
         </nav>
-
 
         <style>
             .navbar-default {
@@ -174,213 +108,290 @@ if (isset($_SESSION['info'])) {
 
                         <div class="container">
 
-                            <form class="form-subscribe" method="get" action="search.php" id="search-bar">
+                            <form class="form-subscribe" action="search.php">
                                 <div class="input-group">
-                                    <input style="color:white;" type="text" class="form-input" placeholder="Search here" name="query" required>
+                                    <input style="color:white;" type="text" class="form-input" name="query"
+                                        placeholder="Search here">
                                     <span class="btn-group">
-                                        <a href='search_query.php'><button class="btn" type="submit">Search</button></a>
-                                </div>
+                                        <button class="btn" type="submit">Search</button>
+</form>
 
 
 
-                                <?php
-                                // Check if the search query is set
-                                if (isset($_GET['query'])) {
-                                    // Get the search query
-                                    $query = $_GET['query'];
-                                    // Define the database connection variables
-                                    $host = 'localhost';
-                                    $username = 'root';
-                                    $password = '';
-                                    $database = 'ssdb';
-                                    // Create a PDO database connection
-                                    $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
-                                    // Set the number of results to display per page
-                                    $results_per_page = 10;
-                                    // Get the current page number
-                                    if (isset($_GET['page'])) {
-                                        $page = $_GET['page'];
-                                    } else {
-                                        $page = 1;
-                                    }
-                                    // Calculate the starting result for the current page
-                                    $start_from = ($page - 1) * $results_per_page;
-                                    // Prepare the SQL statement to search for the query in the database
-                                    // Prepare the SQL statement to search for the query in the title and keywords columns and order the results by relevance
-                                    $stmt = $pdo->prepare("SELECT * FROM `pages` 
-WHERE MATCH (`title`, `keywords`) AGAINST (:query) 
-ORDER BY MATCH (`title`, `keywords`) AGAINST (:query) DESC 
-LIMIT $start_from, $results_per_page");
-                                    $stmt->bindValue(':query', $query);
+                                                              </div>
 
-
-                                    // Execute the SQL statement
-                                    $stmt->execute();
-                                    // Fetch the results
-                                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                    // Get the total number of results for the query
-                                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM `pages` 
-    WHERE `title` LIKE :query OR 
-    `description` LIKE :query OR 
-    `url` LIKE :query");
-                                    $stmt->bindValue(':query', '%' . $query . '%');
-                                    $stmt->execute();
-                                    $total_results = $stmt->fetchColumn();
-                                    // Calculate the total number of pages
-                                    $total_pages = ceil($total_results / $results_per_page);
-                                    // Display the results
-
-                                    foreach ($results as $result) {
-                                ?>
-
-                                        <div class="search_list">
-
-                                            <?php
-
-                                            echo '<h3 style="text-transform:none; "><a href="' . $result['url'] . '" target="_blank"> <b>' . $result['title'] . '</b></a></h3>';
-                                            echo '<p style="color:green; font-size: 11px;">' . $result['url'] . '</p> <br>';
-                                            echo $result['description'] . '<br><br>';
-
-                                            ?>
-
-                                        </div>
-
-                                    <?php
-                                    }
-
-                                    ?>
-
-                                    <div class="paging">
-                                        <?php
-                                        // Display the pagination links
-                                        for ($i = 1; $i <= $total_pages; $i++) {
-
-                                            echo '<a href="search.php?query=' . $query . '&page=' . $i . '">' . $i . '</a>';
-                                        }
-
-
-                                        ?>
-                                    </div>
-                                <?php
-                                } else {
-                                ?>
-                                    <p>Sorry, we are unable to find what you're looking for. Try to search on something. </p>
-
-                                <?php
-                                }
-                                ?>
                             </form>
 
                         </div>
                     </div>
                 </div>
 
-                <div class="secondary_layer">
+               
 
-                </div>
-
-            </div>
-        </div>
+                <?php
 
 
 
+                    $html = "";
+                    if (isset($_GET['query'])) {
+                        $search_query = $_GET['query'];
+                        $search_engine_id = "12df0fc9b39e74ab9";
+                        $api_key = "AIzaSyDT9ocVlzkbQx0l-mpMU-zQq3F0wyDvMzc";
+                        $start_index = isset($_GET['start_index']) ? $_GET['start_index'] : 1;
 
-        <footer class="footer">
-            <div class="container">
-                <div class="col-md-4 col-sm-6">
-                    <h3>SearchSerpent</h3>
-                    <hr>
-                    <p>A cloud-integrated educational web search engine that specifically searches computer
-                        science-related resources and helps users navigate the educational information they are looking for.
-                    </p>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <h3>About Us</h3>
-                    <hr>
-                    <p>At SearchSerpent, we understand the importance of having easy access to educational resources for
-                        computer science students. Our web search engine is designed to provide quick and accurate results,
-                        tailored specifically to the needs of computer science students. </p>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <h3>Contact Info</h3>
-                    <hr>
-                    <ul class="contact-list">
-                        <li>
-                            <p>
-                                <i class="fa fa-home"></i>
-                                Congressional Rd Ext, Barangay 171, Caloocan, Metro Manila
-                            </p>
-                            <p>
-                                <i class="fa fa-phone"></i>
-                                +63 920 303 3229
-                            </p>
-                            <p>
-                                <i class="fa fa-envelope-o"></i>
-                                leitechcorp@gmail.com
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </footer>
+                        $url = "https://www.googleapis.com/customsearch/v1?key=" . $api_key . "&cx=" . $search_engine_id . "&q=" . urlencode($search_query) . "&start=" . $start_index;
 
-        <div class="copyright-part">
-            <p>&copy 2023 <span>SearchSerpent</span> All Rights Reserved</p>
-        </div>
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, $url);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        $output = curl_exec($ch);
+                        curl_close($ch);
 
+                        $results = json_decode($output, true);
 
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('.toggle-menu').jPushMenu({
-                    closeOnClickLink: false
-                });
-                $('.dropdown-toggle').dropdown();
-            });
-        </script>
+                        if (isset($results['items'])) {
 
-        <script type="text/javascript">
-            var terms = ["responsive", "reliable", "relevant"];
+                            $html .= "<div id='search_list'>";
+                            $html .= "<h2 style='color:black; text-transform:none;'>Search Results for " . $search_query . "</h2>";
 
-            function rotateTerm() {
-                var ct = $("#rotate").data("term") || 0;
-                $("#rotate").data("term", ct == terms.length - 1 ? 0 : ct + 1).text(terms[ct]).fadeIn()
-                    .delay(1000).fadeOut(200, rotateTerm);
+                            $items_per_page = 10;
+                            $current_page = floor($start_index / $items_per_page) + 1;
+                            $total_pages = ceil($results['searchInformation']['totalResults'] / $items_per_page);
+                            $first_page = max(1, $current_page - 3);
+                            $last_page = min($total_pages, $current_page + 3);
+
+                            foreach ($results['items'] as $item) {
+                                $html .= "<div class='search_item' style='padding: 35px; 35px; 35px; 35px;'>";
+                                $html .= "<h3 style='font-size:22px; text-transform:none;'>
+                            <a href='" . $item['link'] . "'target='_blank'>" . $item['title'] . "</a>
+                        </h3>";
+                                $html .= "<div>" . $item['link'] . "</div>";
+                                $html .= "<p style='color:black;'>" . htmlspecialchars($item['snippet']) . "</p><br><br>";
+                                $html .= "</div>";
+                            }
+
+                            if ($total_pages > 1) {
+                                $html .= "<div class='pagination'>";
+
+                                if ($current_page > 1) {
+                                    $prev_start_index = ($current_page - 2) * $items_per_page + 1;
+                                    $html .= "<a href='?query=" . urlencode($search_query) . "&start_index=" . $prev_start_index . "' class='page-link'>
+                                Previous
+                            </a>";
+                                }
+
+                                for ($i = $first_page; $i <= $last_page; $i++) {
+                                    $start_index = ($i - 1) * $items_per_page + 1;
+                                    $active_class = ($i == $current_page) ? 'active' : '';
+                                    $html .= "<a href='?query=" . urlencode($search_query) . "&start_index=" . $start_index . "' class='page-link " . $active_class . "'>
+                                " . $i . "
+                            </a>";
+                                }
+
+                                if ($current_page < $total_pages) {
+                                    $next_start_index = $current_page * $items_per_page + 1;
+                                    $html .= "<a href='?query=" . urlencode($search_query) . "&start_index=" . $next_start_index . "' class='page-link'>
+                                Next
+                            </a>";
+                                }
+
+                                $html .= "</div>";
+                            }
+
+                            $html .= "</div>";
+                        } else {
+                            $html = "<h2>No results found for '" . $search_query . "'</h2>";
+                        }
+
+                        echo $html;
+                    }
+                
+                ?>
+                <style>
+                    <!-- For the search results 
+                    -->
+                    h3
+                    {
+                    margin:0;
+                    color:blue;
+                    }
+                    a
+                    {
+                    text-decoration:none;
+                    color:#1a0dab;
+                    }
+                    a:hover
+                    {
+                    text-decoration:underline;
+                    }
+                    div
+                    {
+                    font-size:14px;
+                    color:#006621;
+                    }
+
+                    #search_list {
+                    background-color: #f5f5f5;
+                    text-align: left;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    align-items: center;
             }
-            $(rotateTerm);
-        </script>
+        
+            .search_item {
+                background-color: #fff;
+                max-width: 1000px;
+                width: 100%;
+                margin: 10px 20px;
+                padding: 10px 5px;
+            }
+        
+            .pagination {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+                padding: 10px 10px;
+            }
+        
+                .page-link {
+                    display: block;
+                    padding: 5px 10px;
+                    margin: 0 5px;
+                    background-color: #fff;
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    color: #333;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+        
+                .page-link:hover,
+                .page-link:focus {
+                    background-color: #eee;
+                }
+        
+                .page-link.active {
+                    background-color: #333;
+                    color: #fff;
+                    border-color: #333;
+                }
 
 
-        <script type="text/javascript">
-            jQuery('.counter-item').appear(function() {
-                jQuery('.counter-number').countTo();
-                jQuery(this).addClass('funcionando');
-                console.log('funcionando');
+                </style>
+
+
+
+
+            </div>
+
+
+            <div class="secondary_layer">
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="col-md-4 col-sm-6">
+                <h3>SearchSerpent</h3>
+                <hr>
+                <p>A cloud-integrated educational web search engine that specifically searches computer
+                    science-related resources and helps users navigate the educational information they are looking for.
+                </p>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <h3>About Us</h3>
+                <hr>
+                <p>At SearchSerpent, we understand the importance of having easy access to educational resources for
+                    computer science students. Our web search engine is designed to provide quick and accurate results,
+                    tailored specifically to the needs of computer science students. </p>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <h3>Contact Info</h3>
+                <hr>
+                <ul class="contact-list">
+                    <li>
+                        <p>
+                            <i class="fa fa-home"></i>
+                            Congressional Rd Ext, Barangay 171, Caloocan, Metro Manila
+                        </p>
+                        <p>
+                            <i class="fa fa-phone"></i>
+                            +63 920 303 3229
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope-o"></i>
+                            leitechcorp@gmail.com
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <div class="copyright-part">
+        <p>&copy 2023 <span>SearchSerpent</span> All Rights Reserved</p>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.toggle-menu').jPushMenu({
+                closeOnClickLink: false
             });
-        </script>
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
 
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $("#clients-slider").carousel({
-                    interval: 5000 //TIME IN MILLI SECONDS
-                });
+    <script type="text/javascript">
+        var terms = ["responsive", "reliable", "relevant"];
+
+        function rotateTerm() {
+            var ct = $("#rotate").data("term") || 0;
+            $("#rotate").data("term", ct == terms.length - 1 ? 0 : ct + 1).text(terms[ct]).fadeIn()
+                .delay(1000).fadeOut(200, rotateTerm);
+        }
+        $(rotateTerm);
+    </script>
+
+
+    <script type="text/javascript">
+        jQuery('.counter-item').appear(function () {
+            jQuery('.counter-number').countTo();
+            jQuery(this).addClass('funcionando');
+            console.log('funcionando');
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#clients-slider").carousel({
+                interval: 5000 //TIME IN MILLI SECONDS
             });
-        </script>
+        });
+    </script>
 
 
-        <script type="text/javascript">
-            $(function() {
-                $.scrollUp({
-                    scrollName: 'scrollUp', // Element ID
-                    topDistance: '300', // Distance from top before showing element (px)
-                    topSpeed: 600, // Speed back to top (ms)
-                    animation: 'fade', // Fade, slide, none
-                    animationInSpeed: 200, // Animation in speed (ms)
-                    animationOutSpeed: 200, // Animation out speed (ms)
-                    activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-                    scrollImg: true,
-                });
+    <script type="text/javascript">
+        $(function () {
+            $.scrollUp({
+                scrollName: 'scrollUp', // Element ID
+                topDistance: '300', // Distance from top before showing element (px)
+                topSpeed: 600, // Speed back to top (ms)
+                animation: 'fade', // Fade, slide, none
+                animationInSpeed: 200, // Animation in speed (ms)
+                animationOutSpeed: 200, // Animation out speed (ms)
+                activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+                scrollImg: true,
             });
-        </script>
+        });
+    </script>
 
 
 </body>

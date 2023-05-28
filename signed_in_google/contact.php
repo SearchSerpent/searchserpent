@@ -4,29 +4,20 @@ include 'dbconfig.php';
 
 session_start();
 
-$user_id = $_SESSION['user_id'];
-
-if (!isset($user_id)) {
-    header('location:contact.php');
-}
-
 if (isset($_POST['send'])) {
+    $conn = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud');
 
-    $conn = mysqli_connect('localhost', 'root', '', 'pdocrud');
 
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $msg = mysqli_real_escape_string($conn, $_POST['message']);
 
-    $select_message = mysqli_query($conn, "SELECT * FROM `message` WHERE name = '$name' AND EmailId = '$email' AND message = '$msg'") or die('query failed');
+    $select_message = mysqli_query($conn, "SELECT * FROM `message`");
 
-    if (mysqli_num_rows($select_message) > 0) {
-        $message[] = 'Message already sent!';
-    } else {
-        mysqli_query($conn, "INSERT INTO `message`(user_id, name, EmailId,  message) VALUES('$user_id', '$name', '$email', '$msg')") or die('query failed');
-        $message[] = 'Message sent successfully!';
-    }
+    mysqli_query($conn, "INSERT INTO `message`(name, EmailId,  message) VALUES('$name', '$email', '$msg')") or die('query failed');
+    $message[] = 'Message sent successfully!';
 }
+
 
 ?>
 
@@ -52,12 +43,11 @@ if (isset($_POST['send'])) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="signed/manifest.json">
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -65,19 +55,7 @@ if (isset($_POST['send'])) {
 
 <body>
 
-    <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <style>
         .green {
@@ -107,13 +85,13 @@ if (isset($_POST['send'])) {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="home.php"></a>
+                    <a class="navbar-brand" href="index.php"></a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="home.php"><span>Home</span></a></li>
+                      <li><a href="home.php"><span>Home</span></a></li>
                         <li><a href="learn.php">Learn</a></li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="contact.php">Contact</a></li>
@@ -153,7 +131,7 @@ if (isset($_POST['send'])) {
 
     <div class="container">
         <ul class="breadcrumb">
-            <li><a href="home.php">Home</a> <span class="divider">/</span></li>
+            <li><a href="index.php">Home</a> <span class="divider">/</span></li>
             <li class="active">Contact</li>
         </ul>
     </div>
@@ -168,43 +146,31 @@ if (isset($_POST['send'])) {
             <div class="col-md-8">
                 <div class="contact-form">
                     <?php
-                    if (isset($error1)) {
+                    if (isset($message)) {
                     ?>
-                        <div style="width: 500px;" class="alert alert-danger" role="alert">
+                        <div style="width: 500px;" class="alert alert-success" role="alert">
                             <center>
-                                <p> Email/username not found.</p>
+                                <p> Message successfully sent.</p>
                             </center>
                         </div>
                     <?php
-                        unset($error1);
+                        unset($message);
                     }
 
                     ?>
-                    <?php
-                    if (isset($error2)) {
-                    ?>
-                        <div style="width: 500px;" class="alert alert-danger" role="alert">
-                            <center>
-                                <p> Incorrect password.</p>
-                            </center>
-                        </div>
-                    <?php
-                        unset($error2);
-                    }
 
-                    ?>
                     <h3><b>Contact Form</b></h3>
                     <hr>
                     <form action="#" method="post">
-                        <input style="width: 500px; font-family:montserrat; text-transform:capitalize;" type="text" name="name" value="<?php echo $_SESSION['myFirstname']; ?> <?php echo $_SESSION['myLastname']; ?>" required placeholder="Name" class="box" onkeydown="return /[a-z, ]/i.test(event.key)" id="firstname" name="firstname">
+                        <input style="width: 500px; max-width: 100%; font-family:montserrat; margin-top: 5px;" type="text" name="name" required placeholder="Name" class="box" onkeydown="return /[a-z, ]/i.test(event.key)" id="firstname" name="firstname">
 
-                        <input style="width: 500px; font-family:montserrat; text-transform: none" type="email" name="email" value="<?php echo $_SESSION['myVariable']; ?>" required placeholder="Email" class="box">
+                        <input style="width: 500px; max-width: 100%; font-family:montserrat;" type="email" name="email" required placeholder="Email" class="box">
 
-                        <textarea name="message" class="box" placeholder="Message here" id="" cols="20" rows="5" style="width: 500px; font-family: montserrat;" required></textarea>
+                        <textarea name="message" class="box" placeholder="Message here" id="" cols="20" rows="5" style="width: 500px; max-width: 100%; font-family: montserrat;" required></textarea>
                         <br>
 
                         <!-- Send button -->
-                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px; height: 40px; margin-top: 15px; padding-top: 9px; font-family: Montserrat;" type="submit" name="send" value="Send" class="form-btn">
+                        <input style="color:#F5F5F5; background-color:#000; text-transform:none; font-size: 16px; width: 120px;height: 40px; margin-top: 15px; padding-top: 9px; font-family: Montserrat;" type="submit" name="send" value="Send" class="form-btn">
 
                     </form>
                 </div>

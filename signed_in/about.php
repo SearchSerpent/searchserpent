@@ -21,6 +21,9 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
 
 
@@ -100,7 +103,7 @@
         <div class="container">
             <div class="col-md-6">
                 <div class="image">
-                    <img src="images/about-us1.jpg" class="img-responsive">
+                    <img src="images/about-us.jpg" class="img-responsive">
                 </div>
             </div>
             <div class="col-md-6">

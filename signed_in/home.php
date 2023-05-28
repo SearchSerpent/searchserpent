@@ -1,3 +1,14 @@
+<?php
+header("Cache-Control: no-cache, must-revalidate");
+
+$conn = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud');
+
+session_start();
+
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -22,12 +33,11 @@
     <script src="js/jPushMenu.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+ 
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -35,19 +45,7 @@
 
 <body>
 
-    <div class="loader"></div>
-
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
+  
 
     <header>
 
@@ -70,7 +68,7 @@
                         <li><a href="home.php"><span>Home</span></a></li>
                         <li><a href="learn.php">Learn</a></li>
                         <li><a href="about.php">About</a></li>
-                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="/contact.php">Contact</a></li>
                         <li><a href="profile.php">Profile</a></li>
                     </ul>
                 </div>

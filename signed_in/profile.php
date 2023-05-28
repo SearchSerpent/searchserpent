@@ -1,6 +1,6 @@
 <?php
 
-@include 'dbconfig.php';
+header("Cache-Control: no-cache, must-revalidate");
 
 $conn = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud');
 
@@ -9,6 +9,7 @@ session_start();
 $_SESSION['myVariable'];
 
 $sessionemail = $_SESSION['myVariable'];
+
 $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE EmailId = '$sessionemail'"));
 
 ?>
@@ -41,6 +42,9 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="./manifest.json">
 
 
 
@@ -144,7 +148,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
                 $name = $user["name"];
                 $image = $user["Photo"];
                 ?>
-                <img src="../searchserpent-admin/upload/<?php echo $image; ?>" width=125 height=125 title="<?php echo $image; ?>">
+                <img src="../admin/upload/<?php echo $image; ?>" width=125 height=125 title="<?php echo $image; ?>">
                 <div class="round">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="name" value="<?php echo $name; ?>">
@@ -160,10 +164,11 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
             <div style=" text-align: center;">
                 <br>
                 <b>
+
                     <p style="font-family: montserrat; font-size: 20px; text-transform:capitalize ">
-                        <?php echo $_SESSION['myFirstname']; ?>
-                        <?php echo $_SESSION['myLastname']; ?>
+                       <?php echo $_SESSION['myFirstname']; ?> <?php echo $_SESSION['myLastname']; ?>
                     </p>
+                    
                 </b>
 
                 <p style="font-family: montserrat; font-size: 15px; text-transform:capitalize "><b>Username:</b>
@@ -182,7 +187,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
         <div style="text-align: center;"> <!-- sign-out button -->
             <br>
 
-            <a href='sign_out.php'> <button style="  background-color:#000;
+            <a href='../sign_in.php'> <button style="  background-color:#000;
                     border: none;
                     border-radius: 5px;
                     color: #F5F5F5;
@@ -248,7 +253,6 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tblusers WHERE Ema
     <div class="copyright-part">
         <p>&copy 2023 <span>SearchSerpent</span> All Rights Reserved</p>
     </div>
-
 
     <script type="text/javascript">
         $(document).ready(function() {

@@ -1,5 +1,8 @@
 <?php
-require 'config.php';
+
+$db_connection = mysqli_connect('sql105.epizy.com', 'epiz_34189122', 'OGboYDIf9LXfL', 'epiz_34189122_pdocrud');
+
+session_start();
 
 if (!isset($_SESSION['login_id'])) {
     header('Location: ../login.php');
@@ -13,7 +16,7 @@ $get_user = mysqli_query($db_connection, "SELECT * FROM `tblusers` WHERE `google
 if (mysqli_num_rows($get_user) > 0) {
     $user = mysqli_fetch_assoc($get_user);
 } else {
-    header('Location: logout.php');
+    header('Location: ../login.php');
     exit;
 }
 ?>
@@ -46,12 +49,11 @@ if (mysqli_num_rows($get_user) > 0) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jPushMenu.js"></script>
     <script src="js/jquery.scrollUp.min.js"></script>
+    
+<script src="/service-worker.js"></script>
+<link rel="manifest" crossorigin="use-credentials" href="signed/manifest.json">
 
-    <script type="text/javascript">
-        $(window).load(function() {
-            $(".loader").fadeOut("slow");
-        })
-    </script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -59,19 +61,7 @@ if (mysqli_num_rows($get_user) > 0) {
 
 <body>
 
-    <div class="loader"></div>
 
-    <style>
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
-        }
-    </style>
 
     <header>
 
@@ -169,12 +159,12 @@ if (mysqli_num_rows($get_user) > 0) {
     <center>
         <p style="font-size: 25px; font-family: montserrat;"><b>Profile Information</b></p>
     </center>
-    <div style="border-style: solid; border-color: gray; width: 500px; margin:auto">
+    <div style="border-style: solid; border-color: gray;  width: 500px; max-width: 100%; margin:auto">
 
         <br>
         <form class="form" id="form" action="" enctype="multipart/form-data" method="post">
             <div class="upload">
-                <img src="<?php echo $user['Photo']; ?>" alt="<?php echo $user['name']; ?>">
+               <center> <img src="<?php echo $user['Photo']; ?>" width=125 height=125 alt="<?php echo $user['name']; ?>"> </center>
             </div>
         </form>
 
@@ -199,7 +189,7 @@ if (mysqli_num_rows($get_user) > 0) {
         <div style="text-align: center;"> <!-- sign-out button -->
             <br>
 
-            <a href='sign_out.php'> <button style="  background-color:#000;
+            <a href='../sign_in.php'> <button style="  background-color:#000;
                     border: none;
                     border-radius: 5px;
                     color: #F5F5F5;
@@ -346,7 +336,7 @@ if (mysqli_num_rows($get_user) > 0) {
             $newImageName .= '.' . $imageExtension;
             $query = "UPDATE tblusers SET Photo = '$newImageName' WHERE id = $id";
             mysqli_query($conn, $query);
-            move_uploaded_file($tmpName, '../searchserpent-admin/upload/' . $newImageName);
+            move_uploaded_file($tmpName, '../admin/upload/' . $newImageName);
             echo
             "
         <script>

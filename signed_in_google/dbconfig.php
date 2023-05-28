@@ -1,11 +1,12 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'pdocrud');
+define('DB_HOST', 'sql105.epizy.com');
+define('DB_USER', 'epiz_34189122');
+define('DB_PASS', 'OGboYDIf9LXfL');
+define('DB_NAME', 'epiz_34189122_pdocrud');
+
 
 try {
-    $dbh = new PDO("mysql:host=" . DB_HOST . "; dbname=" . DB_NAME, DB_USER, DB_PASS);
+    $conn = new PDO("mysql:host=" . DB_HOST . "; dbname=" . DB_NAME, DB_USER, DB_PASS);
 } catch (PDOException $e) {
     exit("Error" . $e->getMessage());
 }
